@@ -732,99 +732,76 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   </div>
   <div class="bkbody">
     <div class="wrap">
-      <div class="bklay">
+      <!-- 預約表單 -->
+      <div style="max-width:780px;margin:0 auto">
+        <div style="background:#fff;border:1.5px solid var(--bdr);border-radius:18px;overflow:hidden;box-shadow:0 6px 28px rgba(46,28,15,.07)">
+          <!-- 表單標題 -->
+          <div style="padding:2.5rem 2.8rem;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%)">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem"><span style="width:20px;height:2px;background:rgba(255,255,255,.5)"></span>一鍵預約</div>
+            <div style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.4rem">填寫資料完成預約</div>
+            <div style="font-size:.85rem;color:rgba(255,255,255,.72);line-height:1.6">直接在下方表單填寫，CY 會在 24 小時內透過 LINE / Email 與你確認</div>
+          </div>
 
-        <!-- LEFT: Calendar -->
-        <div>
-          <div class="calbox">
-            <div class="calhdr">
-              <div class="calmth" id="calmth"></div>
-              <div class="calnav">
-                <div class="calbtn" id="cprev" onclick="chMth(-1)">‹</div>
-                <div class="calbtn" id="cnext" onclick="chMth(1)">›</div>
+          <!-- Google Form 嵌入 -->
+          <div style="padding:2.5rem 2.8rem">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeyVSX3NpkwLuQARDQ7-OAgk75yTeyHQXD30-bfbPuBJpTqVQ/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" style="border:none;border-radius:8px">載入中…</iframe>
+          </div>
+
+          <!-- 流程說明 -->
+          <div style="padding:2.2rem 2.8rem;background:linear-gradient(135deg,var(--or5) 0%,#fef8f3 100%);border-top:1.5px solid var(--bdr)">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--or2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:1px;background:var(--or2)"></span>預約流程</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+              <div style="display:flex;gap:1rem">
+                <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                <div style="font-size:.82rem;color:var(--mut);line-height:1.7"><strong style="color:var(--dk);display:block;margin-bottom:.2rem">填寫表單</strong>提供基本資料與需求</div>
+              </div>
+              <div style="display:flex;gap:1rem">
+                <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                <div style="font-size:.82rem;color:var(--mut);line-height:1.7"><strong style="color:var(--dk);display:block;margin-bottom:.2rem">確認預約</strong>CY 24 小時內確認</div>
+              </div>
+              <div style="display:flex;gap:1rem">
+                <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+                <div style="font-size:.82rem;color:var(--mut);line-height:1.7"><strong style="color:var(--dk);display:block;margin-bottom:.2rem">完成付款</strong>LINE PAY / 銀行轉帳</div>
+              </div>
+              <div style="display:flex;gap:1rem">
+                <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+                <div style="font-size:.82rem;color:var(--mut);line-height:1.7"><strong style="color:var(--dk);display:block;margin-bottom:.2rem">預約完成</strong>收到諮詢前指引 🎉</div>
               </div>
             </div>
-            <div class="caldow"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
-            <div class="caldays" id="caldays"></div>
-          </div>
-          <div class="timebox" id="timebox" style="display:none">
-            <div class="timettl" id="timelbl"></div>
-            <div class="timeslots" id="timeslots"></div>
           </div>
 
-          <!-- Info box -->
-          <div style="margin-top:2rem;padding:2rem;background:#fff;border:1.5px solid var(--bdr);border-radius:16px;box-shadow:0 4px 20px rgba(46,28,15,.05);position:relative;overflow:hidden">
-            <div style="position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,var(--or5) 0%,transparent 60%);pointer-events:none;z-index:0"></div>
-            <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--or2);margin-bottom:1.3rem;position:relative;z-index:1;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:1px;background:var(--or2)"></span>流程說明</div>
-            <div style="display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1">
-              <div style="display:flex;align-items:flex-start;gap:1rem;font-size:.83rem;color:var(--mut)"><span style="width:1.6rem;height:1.6rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem">1</span><span style="padding-top:.08rem">選擇希望的日期與時段</span></div>
-              <div style="display:flex;align-items:flex-start;gap:1rem;font-size:.83rem;color:var(--mut)"><span style="width:1.6rem;height:1.6rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem">2</span><span style="padding-top:.08rem">點擊表單按鈕，填寫基本資料</span></div>
-              <div style="display:flex;align-items:flex-start;gap:1rem;font-size:.83rem;color:var(--mut)"><span style="width:1.6rem;height:1.6rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem">3</span><span style="padding-top:.08rem">加入 LINE <strong style="color:var(--dk)">@902rnnqs</strong> 傳訊確認</span></div>
-              <div style="display:flex;align-items:flex-start;gap:1rem;font-size:.83rem;color:var(--mut)"><span style="width:1.6rem;height:1.6rem;border-radius:50%;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem">4</span><span style="padding-top:.08rem">完成匯款後，預約即完成 🎉</span></div>
+          <!-- 付款資訊 -->
+          <div style="padding:2rem 2.8rem;background:#fff;border-top:1.5px solid var(--bdr)">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--or2);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:1px;background:var(--or2)"></span>付款資訊</div>
+            <div style="padding:1.2rem;background:linear-gradient(135deg,var(--or5) 0%,#fef8f3 100%);border:1.2px solid var(--bdr);border-radius:12px;font-size:.82rem;color:var(--mut);line-height:1.8">
+              <div style="font-weight:700;color:var(--dk);margin-bottom:.6rem">✓ LINE PAY / 銀行轉帳</div>
+              <div style="margin-bottom:.8rem">
+                <div style="font-size:.8rem;color:var(--mid);margin-bottom:.3rem"><strong>824 連線商業銀行（總行 6880）</strong></div>
+                <div style="font-family:monospace;font-size:.9rem;font-weight:600;color:var(--or1)">帳號：111005988884</div>
+              </div>
+              <div style="font-size:.78rem;color:var(--mid);background:#fff;padding:.8rem;border-radius:8px;border-left:2.5px solid var(--or1)">
+                <strong>轉帳後：</strong>將轉帳截圖傳至 LINE <strong>@902rnnqs</strong> 完成報名
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- RIGHT: Google Form link -->
-        <div class="bkpanel">
-          <div style="padding:2rem 2.2rem;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);border-bottom:none">
-            <div style="font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="width:20px;height:2px;background:rgba(255,255,255,.5)"></span>Step 2</div>
-            <div style="font-size:1.12rem;font-weight:700;color:#fff;margin-bottom:.3rem">填寫報名表單</div>
-            <div style="font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.6">輕鬆填寫，一鍵完成預約</div>
-          </div>
-
-          <!-- 選好時段後顯示的提示 -->
-          <div id="selBanner" style="display:none;padding:1rem 2.2rem;background:linear-gradient(135deg,#fde8d3 0%,#fef5ec 100%);border-bottom:1px solid var(--bdr);font-size:.85rem;color:var(--dk);font-weight:500;border-left:3px solid var(--or1)">
-            ✅ 已選擇：<strong id="selBannerText" style="color:var(--or1)"></strong>
-            <div style="font-size:.75rem;color:var(--mut);margin-top:.35rem">表單中會看到這個時段，直接確認即可</div>
-          </div>
-
-          <div style="padding:2.4rem 2.2rem;display:flex;flex-direction:column;gap:1.8rem">
-
-            <!-- 表單說明 -->
-            <div style="text-align:center">
-              <div style="font-size:3rem;margin-bottom:.8rem;opacity:.85">📋</div>
-              <div style="font-size:.98rem;font-weight:700;color:var(--dk);margin-bottom:.6rem">點擊下方按鈕填寫</div>
-              <div style="font-size:.8rem;color:var(--mut);line-height:1.8">表單資料會直接進入 CY 的系統<br>CY 會在 24 小時內確認你的預約</div>
-            </div>
-
-            <!-- 主按鈕 -->
-            <a id="bkFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLSeyVSX3NpkwLuQARDQ7-OAgk75yTeyHQXD30-bfbPuBJpTqVQ/viewform" target="_blank" rel="noopener"
-              style="display:flex;align-items:center;justify-content:center;gap:.6rem;padding:1.15rem 2rem;background:linear-gradient(135deg,var(--or1) 0%,var(--or2) 100%);color:#fff;font-family:var(--f);font-size:.92rem;font-weight:700;letter-spacing:.06em;border-radius:12px;text-decoration:none;transition:all var(--tr);text-align:center;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(192,82,26,.2)"
-              onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 22px rgba(192,82,26,.35)'"
-              onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 14px rgba(192,82,26,.2)'">
-              前往填寫報名表單 <span style="font-size:1rem">→</span>
-            </a>
-
-            <!-- 分隔 -->
-            <div style="display:flex;align-items:center;gap:1rem;margin:.4rem 0">
-              <div style="flex:1;height:1px;background:var(--bdr)"></div>
-              <div style="font-size:.7rem;color:var(--mut);letter-spacing:.04em;text-transform:uppercase;font-weight:500">或</div>
-              <div style="flex:1;height:1px;background:var(--bdr)"></div>
-            </div>
-
-            <!-- LINE 聯繫 -->
-            <a href="https://line.me/R/ti/p/@902rnnqs" target="_blank" rel="noopener"
-              style="display:flex;align-items:center;justify-content:center;gap:.6rem;padding:1rem 2rem;background:#06C755;color:#fff;font-family:var(--f);font-size:.9rem;font-weight:700;border-radius:12px;text-decoration:none;transition:all var(--tr);box-shadow:0 3px 12px rgba(6,199,85,.2)"
-              onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(6,199,85,.3)'"
-              onmouseout="this.style.transform='none';this.style.boxShadow='0 3px 12px rgba(6,199,85,.2)'">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-              聯繫 LINE
-            </a>
-
-            <!-- 付款提醒 -->
-            <div style="padding:1.4rem;background:linear-gradient(135deg,var(--or5) 0%,#fef8f3 100%);border:1.2px solid var(--bdr);border-radius:12px;font-size:.8rem;color:var(--mut);line-height:1.8">
-              <div style="font-weight:700;color:var(--dk);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1rem">💳</span>付款方式</div>
-              <div style="font-size:.77rem;line-height:1.7">
-                <strong style="color:var(--dk);display:block;margin-bottom:.3rem">LINE PAY / 銀行轉帳</strong>
-                824 連線商業銀行<br>帳號：<strong style="color:var(--or1);font-family:monospace">111005988884</strong><br>
-                <span style="display:block;margin-top:.4rem;font-size:.76rem;opacity:.75">轉帳後將截圖傳至 LINE 完成確認</span>
-              </div>
-            </div>
-
-          </div>
+        <!-- 聯繫方式 -->
+        <div style="margin-top:2rem;display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap">
+          <a href="https://line.me/R/ti/p/@902rnnqs" target="_blank" rel="noopener"
+            style="display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.95rem 1.8rem;background:#06C755;color:#fff;font-family:var(--f);font-size:.88rem;font-weight:700;border-radius:12px;text-decoration:none;transition:all var(--tr);box-shadow:0 3px 12px rgba(6,199,85,.2)"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(6,199,85,.3)'"
+            onmouseout="this.style.transform='none';this.style.boxShadow='0 3px 12px rgba(6,199,85,.2)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+            加入 LINE 聯繫
+          </a>
+          <a href="mailto:seminia1491@gmail.com"
+            style="display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.95rem 1.8rem;background:var(--or1);color:#fff;font-family:var(--f);font-size:.88rem;font-weight:700;border-radius:12px;text-decoration:none;transition:all var(--tr);box-shadow:0 3px 12px rgba(192,82,26,.2)"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(192,82,26,.35)'"
+            onmouseout="this.style.transform='none';this.style.boxShadow='0 3px 12px rgba(192,82,26,.2)'">
+            ✉️ 寄信給我
+          </a>
         </div>
-
       </div>
     </div>
   </div>
@@ -929,7 +906,6 @@ function goPage(pg,e){
   window.scrollTo({top:0,behavior:'smooth'});
   document.querySelectorAll('.nlinks a').forEach(a=>{a.classList.remove('on');if(a.dataset.pg===pg)a.classList.add('on')});
   if(pg==='blog') renderBlog();
-  if(pg==='booking') initCal();
   obsFade();
 }
 function goHome(e,hash){
@@ -983,82 +959,6 @@ function submitH(btn){
     setTimeout(()=>document.getElementById('hToast').style.display='none',5000);
   }).catch(()=>alert('送出失敗，請直接聯繫 LINE @902rnnqs'))
     .finally(()=>{btn.disabled=false;btn.textContent='送出訊息 →'});
-}
-
-/* ── BOOKING ── */
-let cy,cm,sd,st;
-const BOOKED={'15':['10:00','14:00'],'20':['09:00','11:00','16:00'],'22':['13:00'],'28':['10:00','15:00']};
-const TIMES=['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
-const MN=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-const MNS=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
-
-function initCal(){
-  const now=new Date();cy=now.getFullYear();cm=now.getMonth();sd=null;st=null;
-  renderCal();
-}
-function renderCal(){
-  document.getElementById('calmth').textContent=cy+' 年 '+MN[cm];
-  const fd=new Date(cy,cm,1).getDay(),dim=new Date(cy,cm+1,0).getDate();
-  const today=new Date();today.setHours(0,0,0,0);
-  const g=document.getElementById('caldays');g.innerHTML='';
-  for(let i=0;i<fd;i++){const b=document.createElement('div');b.className='cday inact';g.appendChild(b)}
-  for(let d=1;d<=dim;d++){
-    const el=document.createElement('div');el.className='cday';el.textContent=d;
-    const cd=new Date(cy,cm,d);
-    if(cd<today){el.classList.add('past')}
-    else{
-      const bk=BOOKED[String(d)]||[];
-      if(TIMES.length-bk.length>0)el.classList.add('hs');
-      if(cd.toDateString()===today.toDateString())el.classList.add('today');
-      el.addEventListener('click',()=>selDay(d));
-    }
-    if(sd===d)el.classList.add('sel');
-    g.appendChild(el);
-  }
-  const now=new Date();
-  const isPast=cy===now.getFullYear()&&cm<=now.getMonth();
-  document.getElementById('cprev').style.cssText=isPast?'opacity:.28;pointer-events:none':'';
-}
-function chMth(d){cm+=d;if(cm>11){cm=0;cy++}if(cm<0){cm=11;cy--}renderCal()}
-function selDay(d){
-  sd=d;st=null;
-  document.querySelectorAll('.cday').forEach(el=>{el.classList.remove('sel');if(parseInt(el.textContent)===d&&!el.classList.contains('inact')&&!el.classList.contains('past'))el.classList.add('sel')});
-  renderSlots(d);updBanner();
-}
-function renderSlots(d){
-  const bk=BOOKED[String(d)]||[];
-  document.getElementById('timelbl').textContent=cy+' 年 '+MNS[cm]+' 月 '+d+' 日 · 可預約時段';
-  const g=document.getElementById('timeslots');g.innerHTML='';
-  TIMES.forEach(t=>{
-    const s=document.createElement('div');
-    s.className='tslot'+(bk.includes(t)?' bk':'');s.textContent=t;
-    if(!bk.includes(t))s.addEventListener('click',()=>{st=t;document.querySelectorAll('.tslot').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');updBanner()});
-    g.appendChild(s);
-  });
-  document.getElementById('timebox').style.display='block';
-}
-function updBanner(){
-  const banner=document.getElementById('selBanner');
-  const txt=document.getElementById('selBannerText');
-  if(!banner||!txt)return;
-  if(sd&&st){
-    txt.textContent=cy+'年'+MNS[cm]+'月'+sd+'日 '+st;
-    banner.style.display='block';
-  }else if(sd){
-    txt.textContent=cy+'年'+MNS[cm]+'月'+sd+'日（請再選擇時間）';
-    banner.style.display='block';
-  }else{
-    banner.style.display='none';
-  }
-  const lk=document.getElementById('bkFormLink');
-  if(lk)lk.href=getBkFormUrl();
-}
-/* ★ 設定：用 Chrome 開啟 Google Form → F12 → Ctrl+F 搜尋 entry. → 找「希望預約時段」欄位的 name，例如 entry.123456789 */
-const BK_ENTRY='entry.XXXXXXXXX'; // ← 替換成你的 entry ID
-function getBkFormUrl(){
-  const BASE='https://docs.google.com/forms/d/e/1FAIpQLSeyVSX3NpkwLuQARDQ7-OAgk75yTeyHQXD30-bfbPuBJpTqVQ/viewform';
-  if(!sd||!st)return BASE;
-  return BASE+'?'+BK_ENTRY+'='+encodeURIComponent(cy+'年'+MNS[cm]+'月'+sd+'日 '+st)+'&usp=pp_url';
 }
 
 /* ── BLOG ── */
