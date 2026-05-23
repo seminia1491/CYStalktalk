@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CY 小孔 · 職涯諮詢師</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-deep: #C45C1A;
+    --orange-warm: #E07A3A;
+    --orange-soft: #F2A96A;
+    --orange-light: #FDE8D4;
+    --orange-pale: #FEF4EC;
+    --cream: #FAF6F1;
+    --brown-dark: #2E1A0E;
+    --brown-mid: #6B3C1F;
+    --brown-light: #A0633A;
+    --white: #FFFDF9;
+    --text-body: #3D2412;
+    --text-muted: #8B5E40;
+    --serif: 'Shippori Mincho', serif;
+    --radius-lg: 2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--serif);
+    background: var(--cream);
+    color: var(--text-body);
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250,246,241,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,92,26,0.12);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 0.8rem 4rem; }
+  .nav-logo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--orange-deep);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--orange-warm);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--orange-deep); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    padding: 0.55rem 1.4rem;
+    background: var(--orange-deep);
+    color: var(--white) !important;
+    border-radius: 1px;
+    letter-spacing: 0.1em;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--orange-warm) !important; color: var(--white) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--orange-deep); transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 5rem 6rem 8rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--orange-warm);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--orange-warm);
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--brown-dark);
+    margin-bottom: 0.5rem;
+  }
+  .hero-title span { color: var(--orange-deep); }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 500;
+    color: var(--brown-mid);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 400px;
+    margin-bottom: 3rem;
+    line-height: 2;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(196,92,26,0.15);
+    border-bottom: 1px solid rgba(196,92,26,0.15);
+  }
+  .stat-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--orange-deep);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 0.3rem;
+  }
+
+  .hero-cta-group { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 2rem;
+    background: var(--orange-deep);
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.1);
+    transition: left 0.3s;
+  }
+  .btn-primary:hover::before { left: 100%; }
+  .btn-primary:hover { background: var(--orange-warm); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 0;
+    color: var(--brown-mid);
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--orange-deep); }
+
+  /* Hero Right */
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--orange-pale);
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(226,122,58,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 20%, rgba(196,92,26,0.1) 0%, transparent 50%);
+  }
+
+  .hero-illustration {
+    position: relative;
+    z-index: 2;
+    width: 75%;
+    max-width: 420px;
+  }
+
+  /* SVG Illustration */
+  .illus-bg-circle {
+    fill: none;
+    stroke: rgba(196,92,26,0.12);
+    stroke-width: 1;
+  }
+  .illus-accent { fill: var(--orange-light); }
+  .illus-dark { fill: var(--brown-dark); }
+  .illus-orange { fill: var(--orange-deep); }
+  .illus-warm { fill: var(--orange-warm); }
+  .illus-skin { fill: #F5CBA7; }
+  .illus-hair { fill: #2E1A0E; }
+
+  .float-badge {
+    position: absolute;
+    background: var(--white);
+    border-radius: 2px;
+    padding: 0.8rem 1.2rem;
+    box-shadow: 0 8px 30px rgba(46,26,14,0.12);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    animation: floatY 4s ease-in-out infinite;
+  }
+  .float-badge-icon { font-size: 1.4rem; }
+  .float-badge-text { font-size: 0.75rem; font-weight: 600; color: var(--brown-dark); line-height: 1.3; }
+  .float-badge-sub { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; }
+  .badge-1 { top: 20%; right: -5%; animation-delay: 0s; }
+  .badge-2 { bottom: 25%; left: -8%; animation-delay: 1.5s; }
+
+  @keyframes floatY {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Decorative BG */
+  .deco-grid {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: linear-gradient(rgba(196,92,26,0.06) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(196,92,26,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; }
+  .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+  .section-header { margin-bottom: 4rem; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--orange-warm);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .section-label::before { content: ''; display: block; width: 25px; height: 1px; background: var(--orange-warm); }
+  .section-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: var(--brown-dark);
+    line-height: 1.3;
+  }
+  .section-title em { font-style: normal; color: var(--orange-deep); }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 8rem 0;
+    background: var(--white);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .about-visual { position: relative; }
+  .about-portrait {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--orange-pale);
+    border: 1px solid rgba(196,92,26,0.15);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-portrait-inner {
+    width: 85%;
+    height: 90%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0;
+    position: relative;
+  }
+  .about-frame {
+    position: absolute;
+    top: -12px; left: -12px;
+    right: 12px; bottom: 12px;
+    border: 1px solid rgba(196,92,26,0.25);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .about-tag {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    background: var(--orange-deep);
+    color: var(--white);
+    padding: 1.2rem 1.5rem;
+    z-index: 3;
+  }
+  .about-tag-num { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+  .about-tag-text { font-size: 0.7rem; letter-spacing: 0.1em; opacity: 0.85; margin-top: 0.2rem; }
+
+  .about-content { padding-right: 2rem; }
+  .about-intro { font-size: 1.05rem; color: var(--text-muted); line-height: 2.1; margin-bottom: 2rem; }
+  .about-intro strong { color: var(--orange-deep); font-weight: 700; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .tag-pill {
+    padding: 0.4rem 1rem;
+    background: var(--orange-pale);
+    border: 1px solid rgba(196,92,26,0.2);
+    font-size: 0.78rem;
+    color: var(--brown-mid);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SERVICE ── */
+  #service {
+    padding: 8rem 0;
+    background: var(--cream);
+  }
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .service-card {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(196,92,26,0.1);
+    transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--orange-deep);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(46,26,14,0.1); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+  .service-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+  .service-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.9; }
+  .service-num {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(196,92,26,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* Pain Points Banner */
+  .pain-banner {
+    margin-top: 5rem;
+    background: var(--orange-deep);
+    padding: 3.5rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  .pain-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    min-width: 120px;
+  }
+  .pain-divider { width: 1px; height: 60px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+  .pain-items { display: flex; gap: 3rem; flex-wrap: wrap; }
+  .pain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    color: var(--white);
+  }
+  .pain-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange-soft); margin-top: 0.6rem; flex-shrink: 0; }
+  .pain-text { font-size: 0.9rem; line-height: 1.7; }
+
+  /* ── PROCESS ── */
+  #process {
+    padding: 8rem 0;
+    background: var(--brown-dark);
+    overflow: hidden;
+  }
+  #process .section-label { color: var(--orange-soft); }
+  #process .section-label::before { background: var(--orange-soft); }
+  #process .section-title { color: var(--white); }
+  #process .section-title em { color: var(--orange-soft); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 3rem; left: 12.5%;
+    width: 75%; height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .process-step { padding: 0 2rem; position: relative; }
+  .step-num {
+    width: 3.5rem; height: 3.5rem;
+    border-radius: 50%;
+    background: var(--orange-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    position: relative; z-index: 2;
+    margin-bottom: 2rem;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .process-step:hover .step-num {
+    transform: scale(1.1);
+    background: var(--orange-warm);
+  }
+  .step-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+  .step-desc { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 2; }
+
+  .process-cta {
+    text-align: center;
+    margin-top: 5rem;
+    padding-top: 5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .process-cta p {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+  .process-cta span { color: var(--orange-soft); }
+
+  /* ── TRUST ── */
+  #trust {
+    padding: 8rem 0;
+    background: var(--orange-pale);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .testimonial-card {
+    background: var(--white);
+    padding: 3rem;
+    border: 1px solid rgba(196,92,26,0.1);
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(46,26,14,0.08);
+  }
+  .testimonial-card:first-child {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .quote-mark {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--orange-light);
+    margin-bottom: -1rem;
+    display: block;
+    font-family: Georgia, serif;
+  }
+  .testimonial-text { font-size: 0.9rem; color: var(--text-muted); line-height: 2.1; margin-bottom: 2rem; }
+  .testimonial-highlight {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    line-height: 1.8;
+    border-left: 3px solid var(--orange-deep);
+    padding-left: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+  .author-avatar {
+    width: 2.8rem; height: 2.8rem;
+    border-radius: 50%;
+    background: var(--orange-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--orange-deep);
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 0.85rem; font-weight: 700; color: var(--brown-dark); }
+  .author-role { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* Star Rating */
+  .stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+  .star { color: var(--orange-warm); font-size: 0.85rem; }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 8rem 0;
+    background: var(--white);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-left {}
+  .contact-tagline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    line-height: 1.7;
+    margin: 2rem 0;
+  }
+  .contact-tagline span { color: var(--orange-deep); }
+  .contact-methods { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+  .contact-method {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--orange-pale);
+    border: 1px solid rgba(196,92,26,0.12);
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .contact-method:hover {
+    background: var(--orange-light);
+    transform: translateX(4px);
+  }
+  .method-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .method-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; color: var(--orange-warm); text-transform: uppercase; }
+  .method-value { font-size: 0.92rem; font-weight: 500; color: var(--brown-dark); margin-top: 0.1rem; }
+
+  /* Contact Form */
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--text-muted); }
+  .form-input, .form-textarea {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(196,92,26,0.2);
+    background: var(--orange-pale);
+    color: var(--text-body);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--orange-warm);
+    background: var(--white);
+  }
+  .form-textarea { resize: vertical; min-height: 130px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Form Toast */
+  .form-toast {
+    display: none;
+    padding: 1rem 1.5rem;
+    background: var(--orange-light);
+    border-left: 3px solid var(--orange-deep);
+    font-size: 0.88rem;
+    color: var(--brown-dark);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 4rem;
+    background: var(--brown-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo { font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.1em; }
+  .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--orange-soft); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+  .fade-up:nth-child(1) { transition-delay: 0s; }
+  .fade-up:nth-child(2) { transition-delay: 0.08s; }
+  .fade-up:nth-child(3) { transition-delay: 0.16s; }
+  .fade-up:nth-child(4) { transition-delay: 0.24s; }
+  .fade-up:nth-child(5) { transition-delay: 0.32s; }
+  .fade-up:nth-child(6) { transition-delay: 0.4s; }
+  .fade-up:nth-child(7) { transition-delay: 0.48s; }
+  .fade-up:nth-child(8) { transition-delay: 0.56s; }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99;
+    background: var(--cream);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--brown-dark);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--orange-deep); }
+  .mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--brown-mid);
+    background: none;
+    border: none;
+    font-family: var(--serif);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2.5rem; }
+    nav.scrolled { padding: 0.8rem 2.5rem; }
+    .section-wrap { padding: 0 2.5rem; }
+    .hero-left { padding: 8rem 3rem 5rem 4rem; }
+    .service-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .process-steps::before { display: none; }
+    .process-step { padding: 0 1.5rem 3rem; }
+    footer { padding: 3rem 2.5rem; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.1rem 1.5rem; }
+    nav.scrolled { padding: 0.8rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .section-wrap { padding: 0 1.5rem; }
+
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 8rem 1.5rem 4rem; }
+    .hero-right { min-height: 50vw; display: none; }
+    .hero-stats { gap: 2rem; }
+    .deco-grid { display: none; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-content { padding-right: 0; }
+    .about-portrait { aspect-ratio: 4/3; }
+
+    .service-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .service-card { padding: 1.8rem 1.3rem; }
+    .pain-banner { padding: 2.5rem 1.5rem; flex-direction: column; gap: 1.5rem; }
+    .pain-divider { display: none; }
+    .pain-items { flex-direction: column; gap: 1rem; }
+
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { padding: 0 0 2.5rem; }
+
+    .trust-grid { grid-template-columns: 1fr; }
+    .testimonial-card:first-child { grid-column: span 1; grid-template-columns: 1fr; gap: 0; }
+
+    .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+
+    footer { flex-direction: column; align-items: flex-start; padding: 2.5rem 1.5rem; }
+    .footer-links { gap: 1.5rem; }
+
+    #about, #service, #process, #trust, #contact { padding: 5rem 0; }
+  }
+
+  @media (max-width: 480px) {
+    .service-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .stat-num { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#about" onclick="closeMobileMenu()">關於我</a>
+  <a href="#service" onclick="closeMobileMenu()">服務項目</a>
+  <a href="#process" onclick="closeMobileMenu()">諮詢流程</a>
+  <a href="#trust" onclick="closeMobileMenu()">學員心得</a>
+  <a href="#contact" onclick="closeMobileMenu()">聯絡我</a>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">CY 小孔</a>
+  <ul class="nav-links">
+    <li><a href="#about">關於我</a></li>
+    <li><a href="#service">服務項目</a></li>
+    <li><a href="#process">諮詢流程</a></li>
+    <li><a href="#trust">學員心得</a></li>
+    <li><a href="#contact" class="nav-cta">預約諮詢</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">職涯諮詢師</div>
+    <h1 class="hero-title">找到你的<br><span>職涯方向</span><br>從此刻開始</h1>
+    <p class="hero-subtitle">陪你釐清迷茫，走向真正適合自己的路</p>
+    <p class="hero-desc">不確定自己擅長什麼？不知道如何轉職？我在這裡傾聽、分析、陪伴你找到屬於你的職涯答案。</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">14<span style="font-size:1.2rem">+</span></div>
+        <div class="stat-label">年跨產業經驗</div>
+      </div>
+      <div>
+        <div class="stat-num">200<span style="font-size:1.2rem">+</span></div>
+        <div class="stat-label">小時諮詢時數</div>
+      </div>
+      <div>
+        <div class="stat-num">35<span style="font-size:1.2rem">+</span></div>
+        <div class="stat-label">位夥伴找到方向</div>
+      </div>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#contact" class="btn-primary">立即預約諮詢 →</a>
+      <a href="#about" class="btn-ghost">了解更多</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="deco-grid"></div>
+    <div class="hero-illustration">
+      <!-- Illustration SVG -->
+      <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <!-- Background decoration -->
+        <circle cx="200" cy="240" r="180" fill="none" stroke="rgba(196,92,26,0.1)" stroke-width="1"/>
+        <circle cx="200" cy="240" r="150" fill="none" stroke="rgba(196,92,26,0.07)" stroke-width="1"/>
+
+        <!-- Large warm circle bg -->
+        <circle cx="200" cy="260" r="160" fill="rgba(253,232,212,0.5)"/>
+
+        <!-- Figure body -->
+        <ellipse cx="200" cy="380" rx="80" ry="20" fill="rgba(196,92,26,0.08)"/>
+
+        <!-- Clothing / body -->
+        <path d="M145 290 Q145 360 145 380 Q165 395 200 395 Q235 395 255 380 Q255 360 255 290 Z" fill="#E07A3A" opacity="0.9"/>
+
+        <!-- Collar detail -->
+        <path d="M185 290 L200 310 L215 290" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+
+        <!-- Arms -->
+        <path d="M145 300 Q120 310 115 340 Q115 355 125 358" fill="none" stroke="#E07A3A" stroke-width="22" stroke-linecap="round"/>
+        <path d="M255 300 Q280 310 285 340 Q285 355 275 358" fill="none" stroke="#E07A3A" stroke-width="22" stroke-linecap="round"/>
+
+        <!-- Hands -->
+        <ellipse cx="125" cy="362" rx="14" ry="10" fill="#F5CBA7"/>
+        <ellipse cx="275" cy="362" rx="14" ry="10" fill="#F5CBA7"/>
+
+        <!-- Neck -->
+        <rect x="188" y="260" width="24" height="35" rx="8" fill="#F5CBA7"/>
+
+        <!-- Head -->
+        <ellipse cx="200" cy="230" rx="60" ry="65" fill="#F5CBA7"/>
+
+        <!-- Hair top -->
+        <path d="M142 215 Q148 148 200 145 Q252 148 258 215 Q250 185 200 182 Q150 185 142 215Z" fill="#2E1A0E"/>
+        <!-- Hair side details -->
+        <path d="M142 215 Q135 235 138 255" fill="none" stroke="#2E1A0E" stroke-width="14" stroke-linecap="round"/>
+        <path d="M258 215 Q265 235 262 255" fill="none" stroke="#2E1A0E" stroke-width="14" stroke-linecap="round"/>
+
+        <!-- Eyes -->
+        <ellipse cx="178" cy="228" rx="9" ry="10" fill="white"/>
+        <ellipse cx="222" cy="228" rx="9" ry="10" fill="white"/>
+        <circle cx="180" cy="230" r="5" fill="#2E1A0E"/>
+        <circle cx="224" cy="230" r="5" fill="#2E1A0E"/>
+        <circle cx="182" cy="228" r="1.5" fill="white"/>
+        <circle cx="226" cy="228" r="1.5" fill="white"/>
+
+        <!-- Smile -->
+        <path d="M185 252 Q200 265 215 252" fill="none" stroke="#C45C1A" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Cheeks -->
+        <ellipse cx="163" cy="247" rx="13" ry="8" fill="rgba(240,140,80,0.25)"/>
+        <ellipse cx="237" cy="247" rx="13" ry="8" fill="rgba(240,140,80,0.25)"/>
+
+        <!-- Decorative sparkles / stars -->
+        <g fill="var(--orange-deep)" opacity="0.6">
+          <polygon points="60,80 64,95 79,95 67,104 71,120 60,111 49,120 53,104 41,95 56,95" transform="scale(0.6) translate(-20,80)"/>
+        </g>
+
+        <!-- Floating card element -->
+        <rect x="28" y="130" width="110" height="55" rx="4" fill="white" filter="url(#shadow)"/>
+        <defs>
+          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(46,26,14,0.12)"/>
+          </filter>
+        </defs>
+        <text x="38" y="152" font-size="9" fill="#8B5E40" font-family="serif" letter-spacing="1">職涯方向</text>
+        <rect x="38" y="158" width="70" height="3" rx="1" fill="rgba(196,92,26,0.2)"/>
+        <rect x="38" y="165" width="50" height="3" rx="1" fill="rgba(196,92,26,0.12)"/>
+        <circle cx="118" cy="152" r="8" fill="#C45C1A" opacity="0.8"/>
+        <text x="115" y="156" font-size="10" fill="white" font-family="serif">✓</text>
+
+        <!-- Right float element -->
+        <rect x="262" y="100" width="110" height="55" rx="4" fill="white" filter="url(#shadow)"/>
+        <text x="272" y="122" font-size="9" fill="#8B5E40" font-family="serif" letter-spacing="1">求職信心</text>
+        <rect x="272" y="128" width="70" height="3" rx="1" fill="rgba(196,92,26,0.2)"/>
+        <rect x="272" y="135" width="45" height="3" rx="1" fill="rgba(196,92,26,0.12)"/>
+        <circle cx="352" cy="122" r="8" fill="#E07A3A" opacity="0.8"/>
+        <text x="349" y="126" font-size="10" fill="white" font-family="serif">↑</text>
+      </svg>
+    </div>
+
+    <!-- Floating Badges -->
+    <div class="float-badge badge-1">
+      <div class="float-badge-icon">🎯</div>
+      <div>
+        <div class="float-badge-text">釐清職涯方向</div>
+        <div class="float-badge-sub">找到最適合你的路</div>
+      </div>
+    </div>
+    <div class="float-badge badge-2">
+      <div class="float-badge-icon">✨</div>
+      <div>
+        <div class="float-badge-text">發掘內在優勢</div>
+        <div class="float-badge-sub">讓天賦成為你的競爭力</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="about-frame"></div>
+        <div class="about-portrait">
+          <div class="about-portrait-inner">
+            <!-- About illustration -->
+            <svg viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg" style="width:85%;height:auto;">
+              <!-- Warm background wash -->
+              <rect width="300" height="350" fill="rgba(253,232,212,0.4)"/>
+
+              <!-- Desk surface -->
+              <rect x="20" y="260" width="260" height="8" rx="4" fill="rgba(196,92,26,0.15)"/>
+
+              <!-- Notebook on desk -->
+              <rect x="55" y="185" width="80" height="80" rx="3" fill="white" stroke="rgba(196,92,26,0.2)" stroke-width="1"/>
+              <rect x="61" y="195" width="55" height="2" rx="1" fill="rgba(196,92,26,0.25)"/>
+              <rect x="61" y="202" width="45" height="2" rx="1" fill="rgba(196,92,26,0.18)"/>
+              <rect x="61" y="209" width="50" height="2" rx="1" fill="rgba(196,92,26,0.18)"/>
+              <rect x="61" y="216" width="40" height="2" rx="1" fill="rgba(196,92,26,0.18)"/>
+              <!-- Notebook spine -->
+              <rect x="55" y="185" width="8" height="80" rx="2" fill="rgba(196,92,26,0.2)"/>
+
+              <!-- Coffee cup -->
+              <rect x="180" y="230" width="40" height="30" rx="5" fill="white" stroke="rgba(196,92,26,0.2)" stroke-width="1"/>
+              <path d="M220 242 Q232 242 232 252 Q232 262 220 262" fill="none" stroke="rgba(196,92,26,0.2)" stroke-width="1.5"/>
+              <ellipse cx="200" cy="230" rx="20" ry="4" fill="rgba(196,92,26,0.1)"/>
+              <!-- Steam -->
+              <path d="M193 224 Q195 218 193 212" fill="none" stroke="rgba(196,92,26,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M200 222 Q202 216 200 210" fill="none" stroke="rgba(196,92,26,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M207 224 Q209 218 207 212" fill="none" stroke="rgba(196,92,26,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+
+              <!-- Plant -->
+              <rect x="240" y="235" width="20" height="25" rx="3" fill="rgba(196,92,26,0.1)" stroke="rgba(196,92,26,0.2)" stroke-width="1"/>
+              <ellipse cx="250" cy="235" rx="18" ry="14" fill="#7BAF6F" opacity="0.6"/>
+              <ellipse cx="238" cy="228" rx="12" ry="10" fill="#6A9E5E" opacity="0.7"/>
+              <ellipse cx="262" cy="225" rx="11" ry="9" fill="#7BAF6F" opacity="0.65"/>
+
+              <!-- Figure sitting -->
+              <!-- Chair -->
+              <rect x="115" y="250" width="70" height="12" rx="4" fill="rgba(196,92,26,0.15)"/>
+              <rect x="120" y="260" width="5" height="40" rx="2" fill="rgba(196,92,26,0.12)"/>
+              <rect x="175" y="260" width="5" height="40" rx="2" fill="rgba(196,92,26,0.12)"/>
+
+              <!-- Body -->
+              <path d="M135 210 Q130 245 130 260 Q150 268 165 268 Q180 268 170 260 Q170 245 165 210 Z" fill="#E07A3A" opacity="0.85"/>
+
+              <!-- Neck -->
+              <rect x="143" y="188" width="14" height="24" rx="5" fill="#F5CBA7"/>
+
+              <!-- Head -->
+              <ellipse cx="150" cy="165" rx="38" ry="42" fill="#F5CBA7"/>
+
+              <!-- Hair -->
+              <path d="M113 158 Q117 118 150 115 Q183 118 187 158 Q180 135 150 132 Q120 135 113 158Z" fill="#2E1A0E"/>
+              <path d="M113 158 Q108 172 110 185" fill="none" stroke="#2E1A0E" stroke-width="10" stroke-linecap="round"/>
+              <path d="M187 158 Q192 172 190 185" fill="none" stroke="#2E1A0E" stroke-width="10" stroke-linecap="round"/>
+
+              <!-- Eyes -->
+              <ellipse cx="136" cy="163" rx="6" ry="7" fill="white"/>
+              <ellipse cx="164" cy="163" rx="6" ry="7" fill="white"/>
+              <circle cx="137" cy="165" r="4" fill="#2E1A0E"/>
+              <circle cx="165" cy="165" r="4" fill="#2E1A0E"/>
+              <circle cx="139" cy="163" r="1.2" fill="white"/>
+              <circle cx="167" cy="163" r="1.2" fill="white"/>
+
+              <!-- Smile warm -->
+              <path d="M140 180 Q150 190 160 180" fill="none" stroke="#C45C1A" stroke-width="2" stroke-linecap="round"/>
+
+              <!-- Cheeks -->
+              <ellipse cx="122" cy="174" rx="9" ry="6" fill="rgba(240,140,80,0.25)"/>
+              <ellipse cx="178" cy="174" rx="9" ry="6" fill="rgba(240,140,80,0.25)"/>
+
+              <!-- Arms / hands on notebook -->
+              <path d="M135 215 Q110 230 90 240" fill="none" stroke="#F5CBA7" stroke-width="16" stroke-linecap="round"/>
+              <ellipse cx="86" cy="242" rx="12" ry="8" fill="#F5CBA7"/>
+              <path d="M165 215 Q190 230 200 238" fill="none" stroke="#F5CBA7" stroke-width="16" stroke-linecap="round"/>
+              <ellipse cx="204" cy="240" rx="12" ry="8" fill="#F5CBA7"/>
+
+              <!-- Decorative dots -->
+              <circle cx="35" cy="60" r="5" fill="rgba(196,92,26,0.15)"/>
+              <circle cx="265" cy="170" r="4" fill="rgba(196,92,26,0.12)"/>
+              <circle cx="50" cy="300" r="3" fill="rgba(196,92,26,0.1)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="about-tag">
+          <div class="about-tag-num">CY</div>
+          <div class="about-tag-text">職涯諮詢師</div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <div class="section-header">
+          <div class="section-label">關於我</div>
+          <h2 class="section-title">我是<em>貞貽 CY</em>，<br>你的職涯陪伴者</h2>
+        </div>
+        <p class="about-intro fade-up">
+          歡迎來到我的職涯諮詢服務！我擁有超過 <strong>14 年</strong>橫跨零售通路、FMCG、顧問與餐飲業的豐富實戰經驗。
+        </p>
+        <p class="about-intro fade-up">
+          在職涯諮詢的道路上，我累積了超過 <strong>200 小時</strong>的諮詢時間，成功陪伴了超過 <strong>35 位夥伴</strong>找到他們的職涯方向。
+        </p>
+        <p class="about-intro fade-up">
+          無論你是職場新手，還是正在考慮職涯轉換的專業人士，我的目標是透過<strong>善於傾聽、分析歸納</strong>，結合市場實際經驗與資訊，幫助你明確目標、發掘潛力。
+        </p>
+        <div class="about-tags fade-up">
+          <span class="tag-pill">善於傾聽</span>
+          <span class="tag-pill">分析歸納</span>
+          <span class="tag-pill">市場實務經驗</span>
+          <span class="tag-pill">牌卡諮詢</span>
+          <span class="tag-pill">CNC 認證</span>
+          <span class="tag-pill">職涯規劃</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICE ── -->
+<section id="service">
+  <div class="section-wrap">
+    <div class="section-header fade-up">
+      <div class="section-label">服務項目</div>
+      <h2 class="section-title">找到你的<em>職涯答案</em></h2>
+    </div>
+
+    <div class="service-grid">
+      <div class="service-card fade-up">
+        <div class="service-num">01</div>
+        <div class="service-icon">🧭</div>
+        <div class="service-name">職涯方向釐清與決策</div>
+        <p class="service-desc">當你站在職涯的十字路口，我陪你系統性地釐清選項，找出最符合你現況的方向。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">02</div>
+        <div class="service-icon">🔥</div>
+        <div class="service-name">尋找工作熱情與意義</div>
+        <p class="service-desc">探索真正讓你感到投入的事，找出工作與內在動力的連結，不再只是為了薪水而工作。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">03</div>
+        <div class="service-icon">🃏</div>
+        <div class="service-name">職涯生涯牌卡諮詢</div>
+        <p class="service-desc">透過牌卡工具深度探索自我，直觀而有趣地看見你的工作觀、優勢與核心價值。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">04</div>
+        <div class="service-icon">🎯</div>
+        <div class="service-name">求職策略技巧</div>
+        <p class="service-desc">從目標職缺篩選到求職規劃，幫你打造有效的求職策略，提升每一次申請的成功率。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">05</div>
+        <div class="service-icon">📄</div>
+        <div class="service-name">履歷優化／模擬面試</div>
+        <p class="service-desc">讓你的履歷真正說話，並透過模擬面試找出答題盲點，以最佳狀態迎接每一個機會。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">06</div>
+        <div class="service-icon">💎</div>
+        <div class="service-name">如何運用天賦工作？</div>
+        <p class="service-desc">幫你發現獨特的天賦所在，並找到能讓天賦發光的職位與環境，讓工作變得更有力量。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">07</div>
+        <div class="service-icon">🧠</div>
+        <div class="service-name">心理調適負面想法</div>
+        <p class="service-desc">破除求職路上的自我懷疑，重整思維框架，讓你以更正向的心態面對挑戰與挫折。</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-num">08</div>
+        <div class="service-icon">🌟</div>
+        <div class="service-name">建立職場自信</div>
+        <p class="service-desc">從內而外重建自信，讓你在職場上更有說服力，知道自己的價值並敢於表達。</p>
+      </div>
+    </div>
+
+    <div class="pain-banner fade-up">
+      <div class="pain-label">你是否也有這樣的困擾？</div>
+      <div class="pain-divider"></div>
+      <div class="pain-items">
+        <div class="pain-item">
+          <div class="pain-dot"></div>
+          <div class="pain-text">不知道自己擅長什麼，也不知道能做什麼</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-dot"></div>
+          <div class="pain-text">擅長的事情能不能找到好工作？</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-dot"></div>
+          <div class="pain-text">想轉職，但不知道從哪裡開始</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="section-wrap">
+    <div class="section-header fade-up">
+      <div class="section-label">諮詢流程</div>
+      <h2 class="section-title">四個步驟，<em>找回職涯自信</em></h2>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step fade-up">
+        <div class="step-num">01</div>
+        <div class="step-title">初步了解與傾聽</div>
+        <p class="step-desc">深度了解你的現況、困惑與目標，建立安全的對話空間，讓你安心說出真正的想法。</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">02</div>
+        <div class="step-title">分析與歸納優勢</div>
+        <p class="step-desc">透過專業工具與市場視角，系統性地梳理你的經歷、技能與價值觀，找出核心優勢。</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">03</div>
+        <div class="step-title">制定個人化策略</div>
+        <p class="step-desc">根據你的獨特情況，提供具體可行的職涯方向與求職行動建議，不是套路，是真正為你量身打造。</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">04</div>
+        <div class="step-title">持續陪伴與調整</div>
+        <p class="step-desc">職涯探索是一段旅程，我在你身旁提供持續支持，幫你在每個轉折點做出更好的選擇。</p>
+      </div>
+    </div>
+
+    <div class="process-cta fade-up">
+      <p>準備好開始你的<span>職涯探索之旅</span>了嗎？</p>
+      <a href="#contact" class="btn-primary" style="font-size:1rem;padding:1rem 2.5rem;">預約免費諮詢 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST ── -->
+<section id="trust">
+  <div class="section-wrap">
+    <div class="section-header fade-up">
+      <div class="section-label">學員心得</div>
+      <h2 class="section-title">他們找到了<em>屬於自己的路</em></h2>
+    </div>
+
+    <div class="trust-grid">
+      <!-- Main large testimonial -->
+      <div class="testimonial-card fade-up">
+        <div>
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <span class="quote-mark">"</span>
+          <div class="testimonial-highlight">從多種價值觀、職業、職能卡片中，重新認識自己的工作觀，發現對我而言很重要、不能妥協的事情。</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <div class="author-name">小孔很讚</div>
+              <div class="author-role">職涯方向探索學員</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="testimonial-text">從諮詢師的角度看在現職遭遇的困難，釐清問題核心點之外，也從正向的回饋和客觀分析中發現更好的做法，以及恢復信心。</p>
+          <p class="testimonial-text">了解到自己面試回答不足以及不妥的地方，得到如何釐清自身的未來職涯方向的方法。重新審視自己投的工作職缺，可能性以及多元性比自己想像中的多，還有可以努力的空間。</p>
+        </div>
+      </div>
+
+      <!-- Second testimonial -->
+      <div class="testimonial-card fade-up">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <span class="quote-mark">"</span>
+        <div class="testimonial-highlight">找到一個標竿，看他有什麼經驗是我能先達到的，讓我有目標去努力。</div>
+        <p class="testimonial-text">諮詢後重新審視自己的優勢，發現可以嘗試的方向比想像中更多，不再覺得職涯是一條只有一個方向的路。</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">W</div>
+          <div>
+            <div class="author-name">職涯轉型學員</div>
+            <div class="author-role">跨產業轉職</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Third testimonial -->
+      <div class="testimonial-card fade-up">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <span class="quote-mark">"</span>
+        <div class="testimonial-highlight">把我混亂的思緒統整出來，給我一個思路讓我可以去評斷、去選擇。</div>
+        <p class="testimonial-text">諮詢期間很能傾聽我的想法並幫我完整地梳理現階段擁有的能力、對於工作所猶豫的點，讓我能更了解我需要的是哪一種職涯。</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="author-name">職場迷茫解惑學員</div>
+            <div class="author-role">職涯方向重建</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-label fade-up">聯絡我</div>
+        <h2 class="section-title fade-up">讓我們<em>一起</em><br>探索你的職涯未來</h2>
+        <p class="contact-tagline fade-up">期待與你見面，共同打造<span>屬於你的成功之路</span>。</p>
+
+        <div class="contact-methods fade-up">
+          <a href="mailto:seminia1491@gmail.com" class="contact-method">
+            <div class="method-icon">✉️</div>
+            <div>
+              <div class="method-label">Email</div>
+              <div class="method-value">seminia1491@gmail.com</div>
+            </div>
+          </a>
+          <a href="#" class="contact-method">
+            <div class="method-icon">💬</div>
+            <div>
+              <div class="method-label">LINE</div>
+              <div class="method-value">@902rnnqs</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right fade-up">
+        <div class="section-label" style="margin-bottom:2rem;">傳送訊息</div>
+        <div class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">您的姓名 *</label>
+              <input type="text" class="form-input" id="inputName" placeholder="請輸入姓名">
+            </div>
+            <div class="form-group">
+              <label class="form-label">聯絡方式 *</label>
+              <input type="text" class="form-input" id="inputContact" placeholder="Email 或 LINE ID">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">目前遇到的困擾</label>
+            <input type="text" class="form-input" id="inputTopic" placeholder="例如：想轉職但不知道方向">
+          </div>
+          <div class="form-group">
+            <label class="form-label">想跟我說的話</label>
+            <textarea class="form-textarea" id="inputMsg" placeholder="描述你目前的職涯狀況或想詢問的事..."></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;justify-content:center;padding:1.1rem;" onclick="handleSubmit()">
+            送出訊息 →
+          </button>
+          <div class="form-toast" id="formToast">
+            ✓ 訊息已送出！我會盡快與你聯繫，期待我們的相遇 🌟
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">CY 小孔 · 職涯諮詢師</div>
+  <div class="footer-copy">© 2024 CY 小孔. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#about">關於我</a>
+    <a href="#service">服務</a>
+    <a href="#contact">聯絡</a>
+    <a href="mailto:seminia1491@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  // ── NAV scroll ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ── Mobile menu ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+
+  hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // ── Scroll fade-up ──
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ── Hero entrance ──
+  document.querySelectorAll('.hero-left > *').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(25px)';
+    el.style.transition = `opacity 0.7s ease ${i * 0.1}s, transform 0.7s ease ${i * 0.1}s`;
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    }, 100 + i * 100);
+  });
+
+  // ── Form submit ──
+  function handleSubmit() {
+    const name = document.getElementById('inputName').value.trim();
+    const contact = document.getElementById('inputContact').value.trim();
+    if (!name || !contact) {
+      alert('請填寫姓名和聯絡方式 ✨');
+      return;
+    }
+    const toast = document.getElementById('formToast');
+    toast.style.display = 'block';
+    document.getElementById('inputName').value = '';
+    document.getElementById('inputContact').value = '';
+    document.getElementById('inputTopic').value = '';
+    document.getElementById('inputMsg').value = '';
+    setTimeout(() => { toast.style.display = 'none'; }, 5000);
+  }
+
+  // ── Smooth scroll for older browsers ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
