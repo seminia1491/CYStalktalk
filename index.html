@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CY 小孔 · 職涯諮詢師</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#FAF8F5; --surf:#FFFFFF; --bdr:rgba(175,110,50,0.13); --bdr2:rgba(175,110,50,0.28);
+  --or1:#C0521A; --or2:#DA6E34; --or3:#F2A265; --or4:#FDE8D3; --or5:#FEF5EC;
+  --dk:#1C120A; --mid:#5A3820; --mut:#8C6248; --txt:#2E1C0F;
+  --f:'Shippori Mincho',serif; --nav:68px; --tr:.28s cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg);color:var(--txt);overflow-x:hidden;line-height:1.8}
+a{text-decoration:none;color:inherit}
+button,input,textarea,select{font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--or3);border-radius:2px}
+
+/* PAGE SYSTEM */
+.page{display:none}
+.page.active{display:block}
+
+/* NAV */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);
+  display:flex;align-items:center;justify-content:space-between;padding:0 5vw;
+  background:rgba(250,248,245,.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--bdr);transition:box-shadow var(--tr);
+}
+#nav.shd{box-shadow:0 2px 20px rgba(46,28,15,.07)}
+.nlogo{font-size:.92rem;font-weight:700;letter-spacing:.14em;color:var(--or1);display:flex;align-items:center;gap:.5rem}
+.nlogo-dot{width:6px;height:6px;border-radius:50%;background:var(--or1)}
+.nlinks{display:flex;align-items:center;gap:2rem;list-style:none}
+.nlinks a{font-size:.78rem;font-weight:500;letter-spacing:.09em;color:var(--mut);transition:color var(--tr);position:relative;padding:.2rem 0}
+.nlinks a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--or1);transition:width var(--tr)}
+.nlinks a:hover,.nlinks a.on{color:var(--or1)}
+.nlinks a:hover::after,.nlinks a.on::after{width:100%}
+.nbtn{padding:.48rem 1.25rem;background:var(--or1);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.09em;border:none;cursor:pointer;transition:background var(--tr),transform var(--tr)}
+.nbtn:hover{background:var(--or2);transform:translateY(-1px)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.3rem}
+.hbg span{display:block;width:22px;height:1.5px;background:var(--or1);transition:.28s}
+.hbg.open span:nth-child(1){transform:rotate(45deg) translate(4px,5px)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-5px)}
+
+/* DRAWER */
+#drw{position:fixed;inset:0;z-index:199;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+#drw.open{opacity:1;pointer-events:all}
+#drw a{font-size:1.5rem;font-weight:700;letter-spacing:.1em;color:var(--dk);transition:color .2s}
+#drw a:hover{color:var(--or1)}
+
+/* LAYOUT */
+.wrap{max-width:1160px;margin:0 auto;padding:0 5vw}
+.sp{padding:7rem 0}
+.spsm{padding:5rem 0}
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--or2);display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.lbl::before{content:'';display:block;width:20px;height:1px;background:var(--or2)}
+.txl{font-size:clamp(2.2rem,4vw,3.3rem);font-weight:800;line-height:1.2;color:var(--dk)}
+.txl em{font-style:normal;color:var(--or1)}
+.txm{font-size:clamp(1.6rem,2.8vw,2.3rem);font-weight:700;line-height:1.3;color:var(--dk)}
+.txm em{font-style:normal;color:var(--or1)}
+.body{font-size:.91rem;color:var(--mut);line-height:2.1}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f);font-size:.85rem;font-weight:600;letter-spacing:.08em;cursor:pointer;border:none;transition:all var(--tr)}
+.btp{padding:.85rem 2rem;background:var(--or1);color:#fff}
+.btp:hover{background:var(--or2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(192,82,26,.25)}
+.bto{padding:.8rem 1.8rem;background:transparent;color:var(--or1);border:1.5px solid var(--or1)}
+.bto:hover{background:var(--or1);color:#fff}
+.btg{padding:.8rem 0;background:transparent;color:var(--mid);border-bottom:1px solid currentColor;border-radius:0;font-size:.85rem}
+.btg:hover{color:var(--or1)}
+
+/* FADE */
+.fd{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.fd.in{opacity:1;transform:none}
+.fd:nth-child(2){transition-delay:.07s}.fd:nth-child(3){transition-delay:.14s}
+.fd:nth-child(4){transition-delay:.21s}.fd:nth-child(5){transition-delay:.28s}
+.fd:nth-child(6){transition-delay:.35s}.fd:nth-child(7){transition-delay:.42s}
+.fd:nth-child(8){transition-delay:.49s}
+
+/* FORM ELEMENTS */
+.fi,.fta{width:100%;padding:.88rem 1.1rem;border:1px solid var(--bdr);background:var(--or5);color:var(--txt);font-family:var(--f);font-size:.88rem;outline:none;border-radius:0;-webkit-appearance:none;transition:border-color var(--tr),background var(--tr)}
+.fi:focus,.fta:focus{border-color:var(--or2);background:#fff}
+.fta{resize:vertical;min-height:115px}
+.fl{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--mut);display:block;margin-bottom:.38rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ftoast{display:none;padding:.85rem 1.1rem;background:var(--or4);border-left:3px solid var(--or1);font-size:.83rem;color:var(--dk)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — HERO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#hero{padding-top:var(--nav);min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;position:relative;overflow:hidden}
+.hl{display:flex;flex-direction:column;justify-content:center;padding:4.5rem 4rem 4.5rem 0}
+.hkicker{display:inline-flex;align-items:center;gap:.75rem;font-size:.7rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--or2);margin-bottom:1.8rem}
+.hkicker::before{content:'';width:26px;height:1px;background:var(--or2)}
+.hname{font-size:clamp(2.9rem,5vw,4.8rem);font-weight:800;line-height:1.07;color:var(--dk);margin-bottom:.55rem}
+.hname span{color:var(--or1)}
+.hrole{font-size:1.1rem;font-weight:500;color:var(--mut);margin-bottom:1.8rem}
+.hdesc{font-size:.9rem;color:var(--mut);max-width:410px;line-height:2.1;margin-bottom:2.8rem}
+.hstats{display:flex;gap:3rem;padding:1.8rem 0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);margin-bottom:2.8rem}
+.stn{font-size:2.2rem;font-weight:800;color:var(--or1);line-height:1}
+.stn sup{font-size:.95rem}
+.stl{font-size:.7rem;color:var(--mut);margin-top:.22rem;letter-spacing:.05em}
+.hbtns{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.hr{background:var(--or5);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,rgba(192,82,26,.11) 0%,transparent 65%)}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(192,82,26,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(192,82,26,.055) 1px,transparent 1px);background-size:36px 36px}
+.hiw{position:relative;z-index:2;width:72%;max-width:400px}
+.fc{position:absolute;z-index:3;background:#fff;padding:.78rem 1.1rem;border:1px solid var(--bdr);box-shadow:0 8px 28px rgba(46,28,15,.09);display:flex;align-items:center;gap:.75rem;animation:flt 4s ease-in-out infinite}
+.fc-ic{font-size:1.25rem}
+.fc-t{font-size:.7rem;font-weight:700;color:var(--dk);line-height:1.4}
+.fc-s{font-size:.63rem;color:var(--mut);font-weight:400}
+.fc1{top:18%;right:-5%;animation-delay:0s}
+.fc2{bottom:22%;left:-7%;animation-delay:1.9s}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — ABOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.ag{display:grid;grid-template-columns:1fr 1.12fr;gap:5.5rem;align-items:center}
+.avis{position:relative}
+.aimg{width:100%;aspect-ratio:3/4;background:var(--or5);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.aframe{position:absolute;top:-10px;left:-10px;right:10px;bottom:10px;border:1px solid var(--bdr2);pointer-events:none}
+.achip{position:absolute;bottom:-1.1rem;right:-1.1rem;background:var(--or1);color:#fff;padding:1rem 1.3rem;z-index:2}
+.achip-n{font-size:1.8rem;font-weight:800;line-height:1}
+.achip-t{font-size:.67rem;letter-spacing:.1em;opacity:.85;margin-top:.18rem}
+.atxt p{font-size:.91rem;color:var(--mut);line-height:2.1;margin-bottom:1.1rem}
+.atxt strong{color:var(--or1);font-weight:700}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.8rem}
+.pill{padding:.32rem .88rem;background:var(--or5);border:1px solid var(--bdr);font-size:.74rem;color:var(--mid);letter-spacing:.04em}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — SERVICE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.svchdr{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem}
+.svcg{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.sc{background:var(--surf);padding:2.1rem 1.7rem;border:1px solid var(--bdr);position:relative;overflow:hidden;transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);cursor:default}
+.sc:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(46,28,15,.08);border-color:var(--or3)}
+.sc::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--or1);transform:scaleX(0);transform-origin:left;transition:transform var(--tr)}
+.sc:hover::after{transform:scaleX(1)}
+.scno{position:absolute;top:1.1rem;right:1.3rem;font-size:.6rem;font-weight:700;letter-spacing:.12em;color:rgba(192,82,26,.2)}
+.scic{font-size:1.75rem;margin-bottom:1rem}
+.scnm{font-size:.92rem;font-weight:700;color:var(--dk);margin-bottom:.55rem;line-height:1.5}
+.scdesc{font-size:.79rem;color:var(--mut);line-height:1.9}
+.pbar{margin-top:3.5rem;padding:2.8rem 3.5rem;background:var(--or1);display:flex;align-items:center;gap:3rem;flex-wrap:wrap}
+.ptl{font-size:.67rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);min-width:120px}
+.psep{width:1px;height:52px;background:rgba(255,255,255,.17);flex-shrink:0}
+.plist{display:flex;gap:2.5rem;flex-wrap:wrap}
+.pit{display:flex;align-items:flex-start;gap:.65rem;color:#fff}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--or3);margin-top:.65rem;flex-shrink:0}
+.ptx{font-size:.87rem;line-height:1.7}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — PROCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#process{background:var(--dk)}
+#process .lbl{color:var(--or3)}
+#process .lbl::before{background:var(--or3)}
+#process .txl{color:#fff}
+#process .txl em{color:var(--or3)}
+.procg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4.5rem;position:relative}
+.procg::before{content:'';position:absolute;top:2.5rem;left:10%;width:80%;height:1px;background:rgba(255,255,255,.06)}
+.pstep{padding:0 2rem}
+.psn{width:3rem;height:3rem;border-radius:50%;background:var(--or1);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;position:relative;z-index:2;margin-bottom:1.8rem;transition:transform var(--tr),background var(--tr)}
+.pstep:hover .psn{transform:scale(1.11);background:var(--or2)}
+.pst{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:.65rem}
+.psd{font-size:.79rem;color:rgba(255,255,255,.42);line-height:2}
+.procft{text-align:center;margin-top:5rem;padding-top:4.5rem;border-top:1px solid rgba(255,255,255,.06)}
+.procft p{font-size:1.45rem;font-weight:700;color:#fff;margin-bottom:1.8rem;line-height:1.6}
+.procft span{color:var(--or3)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — TRUST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:3.5rem}
+.tc{background:#fff;padding:2.6rem;border:1px solid var(--bdr);transition:transform var(--tr),box-shadow var(--tr)}
+.tc:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(46,28,15,.07)}
+.tc.wide{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:2.8rem;align-items:start}
+.tstar{display:flex;gap:3px;margin-bottom:.75rem}
+.ts{color:var(--or2);font-size:.8rem}
+.tqm{font-size:3.8rem;font-weight:800;color:var(--or4);line-height:1;display:block;margin-bottom:-.4rem;font-family:Georgia,serif}
+.thi{font-size:.96rem;font-weight:700;color:var(--dk);line-height:1.75;border-left:2.5px solid var(--or1);padding-left:1rem;margin-bottom:1.2rem}
+.tbody{font-size:.83rem;color:var(--mut);line-height:2;margin-bottom:1.4rem}
+.tau{display:flex;align-items:center;gap:.85rem}
+.tav{width:2.5rem;height:2.5rem;border-radius:50%;background:var(--or4);display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:700;color:var(--or1);flex-shrink:0}
+.tanm{font-size:.81rem;font-weight:700;color:var(--dk)}
+.taro{font-size:.7rem;color:var(--mut)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — CONTACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:start}
+.ctag{font-size:1.3rem;font-weight:700;color:var(--dk);line-height:1.7;margin:1.8rem 0}
+.ctag span{color:var(--or1)}
+.cmethods{display:flex;flex-direction:column;gap:1.1rem;margin-top:2.3rem}
+.cm{display:flex;align-items:center;gap:1rem;padding:1.05rem 1.35rem;background:var(--or5);border:1px solid var(--bdr);transition:all var(--tr);cursor:pointer}
+.cm:hover{background:var(--or4);transform:translateX(4px)}
+.cmic{font-size:1.05rem;flex-shrink:0}
+.cmlbl{font-size:.67rem;font-weight:700;letter-spacing:.1em;color:var(--or2);text-transform:uppercase}
+.cmval{font-size:.88rem;font-weight:500;color:var(--dk);margin-top:.08rem}
+.fw{display:flex;flex-direction:column;gap:1rem}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOOKING PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#page-booking{padding-top:var(--nav)}
+.bkhero{background:var(--dk);padding:5rem 0 3.8rem;text-align:center}
+.bkhero .lbl{justify-content:center}
+.bkhero .lbl::before{display:none}
+.bkhero .txl{color:#fff;margin-bottom:.8rem}
+.bkhero .txl em{color:var(--or3)}
+.bkhero p{font-size:.88rem;color:rgba(255,255,255,.42);max-width:460px;margin:0 auto}
+.bkbody{padding:4.5rem 0 6rem}
+.bklay{display:grid;grid-template-columns:1fr 360px;gap:2.8rem;align-items:start}
+
+/* calendar */
+.calbox{background:#fff;border:1px solid var(--bdr);padding:1.8rem}
+.calhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.6rem}
+.calmth{font-size:1.05rem;font-weight:700;color:var(--dk)}
+.calnav{display:flex;gap:.45rem}
+.calbtn{width:2.1rem;height:2.1rem;background:var(--or5);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--or1);transition:background var(--tr)}
+.calbtn:hover{background:var(--or4)}
+.caldow{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:.6rem}
+.caldow span{text-align:center;font-size:.65rem;font-weight:700;letter-spacing:.07em;color:var(--mut);padding:.35rem 0}
+.caldays{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cday{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--mid);border:1px solid transparent;cursor:pointer;transition:all var(--tr);position:relative}
+.cday:hover:not(.inact):not(.past){background:var(--or4);border-color:var(--or3);color:var(--or1)}
+.cday.inact{color:rgba(140,98,72,.22);pointer-events:none}
+.cday.past{color:rgba(140,98,72,.28);pointer-events:none}
+.cday.today{font-weight:700;color:var(--or1)}
+.cday.sel{background:var(--or1)!important;color:#fff!important;font-weight:700}
+.cday.hs::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--or3)}
+.cday.sel::after{background:rgba(255,255,255,.6)}
+.timebox{margin-top:1.8rem}
+.timettl{font-size:.74rem;font-weight:700;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;margin-bottom:.9rem}
+.timeslots{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}
+.tslot{padding:.62rem .4rem;text-align:center;font-size:.8rem;color:var(--mid);font-weight:500;border:1px solid var(--bdr);background:#fff;cursor:pointer;transition:all var(--tr)}
+.tslot:hover{border-color:var(--or3);color:var(--or1);background:var(--or5)}
+.tslot.sel{background:var(--or1);color:#fff;border-color:var(--or1);font-weight:700}
+.tslot.bk{background:var(--bg);color:rgba(140,98,72,.3);border-color:var(--bdr);pointer-events:none;text-decoration:line-through}
+
+/* booking panel */
+.bkpanel{background:#fff;border:1px solid var(--bdr);padding:2.1rem;position:sticky;top:calc(var(--nav) + 1.5rem)}
+.bksel{background:var(--or5);border:1px solid var(--bdr);padding:1.1rem;margin-bottom:1.6rem}
+.bksttl{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or2);margin-bottom:.45rem}
+.bksval{font-size:.9rem;font-weight:700;color:var(--dk)}
+.bksval.emp{color:var(--mut);font-weight:400;font-size:.83rem}
+.bkform{display:flex;flex-direction:column;gap:.88rem}
+.bktoast{display:none;text-align:center;padding:1.4rem}
+.bktic{font-size:2rem;margin-bottom:.45rem}
+.bktt{font-size:.98rem;font-weight:700;color:var(--dk);margin-bottom:.25rem}
+.bkts{font-size:.8rem;color:var(--mut)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BLOG PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#page-blog{padding-top:var(--nav)}
+.blghero{background:var(--surf);padding:4.5rem 0 3rem}
+.bsrow{display:flex;gap:1rem;margin-top:1.8rem;align-items:center;flex-wrap:wrap}
+.bsrch{flex:1;min-width:180px;padding:.75rem 1.1rem;border:1px solid var(--bdr);background:var(--bg);font-family:var(--f);font-size:.87rem;color:var(--txt);outline:none;border-radius:0}
+.bsrch:focus{border-color:var(--or1)}
+.bcats{display:flex;gap:.45rem;flex-wrap:wrap}
+.bcat{padding:.42rem .95rem;border:1px solid var(--bdr);background:var(--bg);font-size:.73rem;font-weight:600;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all var(--tr)}
+.bcat:hover,.bcat.on{background:var(--or1);color:#fff;border-color:var(--or1)}
+.blgbody{padding:3.8rem 0 6rem}
+.blglay{display:grid;grid-template-columns:1fr 285px;gap:3.2rem;align-items:start}
+.blggrid{display:flex;flex-direction:column;gap:1.8rem}
+.bcard{background:#fff;border:1px solid var(--bdr);display:grid;grid-template-columns:1fr 220px;transition:box-shadow var(--tr),border-color var(--tr);cursor:pointer;overflow:hidden}
+.bcard:hover{box-shadow:0 7px 28px rgba(46,28,15,.07);border-color:var(--or3)}
+.bcbody{padding:2rem}
+.bccat{display:inline-flex;align-items:center;gap:.45rem;font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--or2);margin-bottom:.85rem}
+.bccat::before{content:'';display:block;width:12px;height:1px;background:var(--or2)}
+.bctitle{font-size:1.05rem;font-weight:700;color:var(--dk);line-height:1.5;margin-bottom:.7rem}
+.bcard:hover .bctitle{color:var(--or1)}
+.bcex{font-size:.81rem;color:var(--mut);line-height:1.9;margin-bottom:1.3rem}
+.bmeta{display:flex;align-items:center;gap:1rem;font-size:.71rem;color:var(--mut)}
+.bmdot{width:3px;height:3px;border-radius:50%;background:var(--bdr2);flex-shrink:0}
+.bcthumb{background:var(--or5);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;border-left:1px solid var(--bdr);flex-shrink:0}
+.bcthumb-ic{font-size:3.2rem;opacity:.65}
+.bcthumb-t{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);opacity:.55}
+.sbbox{background:#fff;border:1px solid var(--bdr);padding:1.6rem;margin-bottom:1.4rem}
+.sbttl{font-size:.7rem;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--mut);margin-bottom:1.1rem;padding-bottom:.65rem;border-bottom:1px solid var(--bdr)}
+.ritem{display:flex;flex-direction:column;gap:.18rem;padding:.65rem 0;border-bottom:1px solid var(--bdr);cursor:pointer}
+.ritem:last-child{border-bottom:none}
+.ritem:hover .ritm-t{color:var(--or1)}
+.ritm-t{font-size:.81rem;font-weight:600;color:var(--dk);line-height:1.5;transition:color var(--tr)}
+.ritm-d{font-size:.7rem;color:var(--mut)}
+.tagcl{display:flex;flex-wrap:wrap;gap:.4rem}
+.tagit{padding:.26rem .7rem;background:var(--or5);border:1px solid var(--bdr);font-size:.71rem;color:var(--mid);cursor:pointer;transition:all var(--tr)}
+.tagit:hover{background:var(--or1);color:#fff;border-color:var(--or1)}
+
+/* post view */
+.posthero{background:var(--dk);padding:5rem 0 3.8rem}
+.posthero .lbl{color:var(--or3)}
+.posthero .lbl::before{background:var(--or3)}
+.posthero h1{font-size:clamp(1.75rem,3.2vw,2.7rem);font-weight:800;color:#fff;line-height:1.3;margin:1rem 0}
+.postmeta{display:flex;align-items:center;gap:1.4rem;font-size:.76rem;color:rgba(255,255,255,.38);flex-wrap:wrap}
+.postbody{padding:4.5rem 0}
+.postlay{display:grid;grid-template-columns:1fr 265px;gap:3.8rem;align-items:start}
+.postcont h2{font-size:1.25rem;font-weight:700;color:var(--dk);margin:2.4rem 0 .9rem;line-height:1.4}
+.postcont p{font-size:.9rem;color:var(--mut);line-height:2.2;margin-bottom:1.3rem}
+.postcont blockquote{border-left:3px solid var(--or1);padding:1.1rem 1.4rem;background:var(--or5);margin:1.8rem 0;font-size:.93rem;color:var(--mid);line-height:1.9}
+.postcont ul{list-style:none;margin-bottom:1.3rem}
+.postcont ul li{font-size:.88rem;color:var(--mut);line-height:1.9;padding-left:1.1rem;position:relative;margin-bottom:.35rem}
+.postcont ul li::before{content:'·';position:absolute;left:0;color:var(--or1);font-size:1.2rem;line-height:1.5}
+.posttoc{position:sticky;top:calc(var(--nav)+2rem);background:#fff;border:1px solid var(--bdr);padding:1.5rem}
+.posttoc-t{font-size:.67rem;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--mut);margin-bottom:.9rem;padding-bottom:.65rem;border-bottom:1px solid var(--bdr)}
+.toclink{display:block;font-size:.79rem;color:var(--mut);padding:.32rem 0;border-bottom:1px dashed var(--bdr);transition:color var(--tr);cursor:pointer}
+.toclink:hover{color:var(--or1)}
+.pbk{display:inline-flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--or1);cursor:pointer;margin-bottom:1.8rem;background:none;border:none;transition:gap var(--tr)}
+.pbk:hover{gap:.9rem}
+
+/* FOOTER */
+footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.ftl{font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.12em}
+.ftc{font-size:.7rem;color:rgba(255,255,255,.28)}
+.ftlinks{display:flex;gap:1.8rem}
+.ftlinks a{font-size:.7rem;color:rgba(255,255,255,.33);transition:color .2s}
+.ftlinks a:hover{color:var(--or3)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:1024px){
+  #hero{grid-template-columns:1fr}
+  .hr{display:none}
+  .hl{padding:4rem 0}
+  .ag{grid-template-columns:1fr;gap:3rem}
+  .aimg{aspect-ratio:4/3}
+  .svchdr{grid-template-columns:1fr}
+  .svcg{grid-template-columns:repeat(2,1fr)}
+  .procg{grid-template-columns:repeat(2,1fr)}
+  .procg::before{display:none}
+  .pstep{padding:0 1.2rem 2.8rem}
+  .tg{grid-template-columns:1fr}
+  .tc.wide{grid-column:span 1;grid-template-columns:1fr}
+  .cg{grid-template-columns:1fr;gap:3rem}
+  .bklay{grid-template-columns:1fr}
+  .bkpanel{position:static}
+  .blglay{grid-template-columns:1fr}
+  .blgsb{display:none}
+  .bcard{grid-template-columns:1fr}
+  .bcthumb{height:160px;border-left:none;border-top:1px solid var(--bdr)}
+  .postlay{grid-template-columns:1fr}
+  .posttoc{display:none}
+}
+@media(max-width:768px){
+  .nlinks{display:none}
+  .hbg{display:flex}
+  .sp{padding:5rem 0}
+  .hstats{gap:1.8rem}
+  .svcg{grid-template-columns:1fr 1fr}
+  .timeslots{grid-template-columns:repeat(2,1fr)}
+  .pbar{padding:2.2rem 1.4rem;flex-direction:column;gap:1.3rem}
+  .psep{display:none}
+  .plist{flex-direction:column;gap:.75rem}
+  footer{flex-direction:column;align-items:flex-start}
+  .frow{grid-template-columns:1fr}
+  .svchdr{gap:1.8rem}
+  .bkhero{padding:4rem 0 2.8rem}
+}
+@media(max-width:480px){
+  .svcg{grid-template-columns:1fr}
+  .hname{font-size:2.5rem}
+  .stn{font-size:1.85rem}
+  .hstats{gap:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nlogo"><span class="nlogo-dot"></span>CY 小孔</div>
+  <ul class="nlinks" id="nl">
+    <li><a href="#" onclick="goHome(event,'#about')" data-sec="about">關於我</a></li>
+    <li><a href="#" onclick="goHome(event,'#service')" data-sec="service">服務項目</a></li>
+    <li><a href="#" onclick="goPage('booking',event)" data-pg="booking">預約諮詢</a></li>
+    <li><a href="#" onclick="goPage('blog',event)" data-pg="blog">職涯部落格</a></li>
+    <li><button class="btn nbtn" onclick="goPage('booking')">立即預約</button></li>
+  </ul>
+  <button class="hbg" id="hbg" onclick="togDrawer()" aria-label="選單"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- DRAWER -->
+<div id="drw">
+  <a href="#" onclick="goHome(event,'#about');togDrawer()">關於我</a>
+  <a href="#" onclick="goHome(event,'#service');togDrawer()">服務項目</a>
+  <a href="#" onclick="goPage('booking');togDrawer()">預約諮詢</a>
+  <a href="#" onclick="goPage('blog');togDrawer()">職涯部落格</a>
+  <a href="#" onclick="goHome(event,'#contact-sec');togDrawer()">聯絡我</a>
+</div>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hl wrap">
+    <div class="hkicker">職涯諮詢師</div>
+    <h1 class="hname"><span>CY</span> 小孔</h1>
+    <p class="hrole">貞貽 CY · Career Consultant</p>
+    <p class="hdesc">不確定自己擅長什麼？想轉職卻不知道如何開始？<br>我在這裡傾聽、分析、陪伴你找到真正屬於你的職涯方向。</p>
+    <div class="hstats">
+      <div><div class="stn">14<sup>+</sup></div><div class="stl">年跨產業經驗</div></div>
+      <div><div class="stn">200<sup>+</sup></div><div class="stl">小時諮詢時數</div></div>
+      <div><div class="stn">35<sup>+</sup></div><div class="stl">位夥伴找到方向</div></div>
+    </div>
+    <div class="hbtns">
+      <button class="btn btp" onclick="goPage('booking')">預約免費諮詢 →</button>
+      <button class="btn btg" onclick="sTo('#about')">了解更多</button>
+    </div>
+  </div>
+  <div class="hr">
+    <div class="hgrid"></div>
+    <div class="hiw">
+      <svg viewBox="0 0 380 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <circle cx="190" cy="230" r="172" fill="rgba(253,232,211,.5)"/>
+        <ellipse cx="190" cy="370" rx="72" ry="17" fill="rgba(192,82,26,.07)"/>
+        <path d="M140 272 Q137 342 138 362 Q160 377 190 377 Q220 377 242 362 Q243 342 240 272Z" fill="#DA6E34" opacity=".87"/>
+        <path d="M178 272 L190 292 L202 272" fill="none" stroke="rgba(255,255,255,.43)" stroke-width="1.5"/>
+        <path d="M140 285 Q114 297 109 328 Q109 342 120 346" fill="none" stroke="#DA6E34" stroke-width="20" stroke-linecap="round"/>
+        <path d="M240 285 Q266 297 271 328 Q271 342 260 346" fill="none" stroke="#DA6E34" stroke-width="20" stroke-linecap="round"/>
+        <ellipse cx="120" cy="350" rx="12" ry="8.5" fill="#F5CBA7"/>
+        <ellipse cx="260" cy="350" rx="12" ry="8.5" fill="#F5CBA7"/>
+        <rect x="181" y="248" width="18" height="28" rx="6.5" fill="#F5CBA7"/>
+        <ellipse cx="190" cy="218" rx="54" ry="58" fill="#F5CBA7"/>
+        <path d="M137 206 Q142 150 190 146 Q238 150 243 206 Q236 180 190 177 Q144 180 137 206Z" fill="#1C120A"/>
+        <path d="M137 206 Q131 223 134 240" fill="none" stroke="#1C120A" stroke-width="12" stroke-linecap="round"/>
+        <path d="M243 206 Q249 223 246 240" fill="none" stroke="#1C120A" stroke-width="12" stroke-linecap="round"/>
+        <ellipse cx="173" cy="214" rx="8" ry="9" fill="white"/><ellipse cx="207" cy="214" rx="8" ry="9" fill="white"/>
+        <circle cx="175" cy="216" r="4.8" fill="#1C120A"/><circle cx="209" cy="216" r="4.8" fill="#1C120A"/>
+        <circle cx="177" cy="214" r="1.4" fill="white"/><circle cx="211" cy="214" r="1.4" fill="white"/>
+        <path d="M178 238 Q190 249 202 238" fill="none" stroke="#C0521A" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="155" cy="232" rx="11" ry="7" fill="rgba(234,130,70,.2)"/>
+        <ellipse cx="225" cy="232" rx="11" ry="7" fill="rgba(234,130,70,.2)"/>
+        <defs><filter id="fs"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(46,28,15,.1)"/></filter></defs>
+        <rect x="24" y="115" width="105" height="50" rx="3" fill="white" opacity=".95" filter="url(#fs)"/>
+        <text x="34" y="137" font-size="8.5" fill="#8C6248" font-family="serif" letter-spacing="1.5">職涯方向</text>
+        <rect x="34" y="144" width="62" height="2.5" rx="1" fill="rgba(192,82,26,.22)"/>
+        <rect x="34" y="151" width="46" height="2.5" rx="1" fill="rgba(192,82,26,.13)"/>
+        <circle cx="111" cy="138" r="7.5" fill="#C0521A" opacity=".88"/>
+        <text x="108" y="142" font-size="9" fill="white" font-family="serif">✓</text>
+        <rect x="253" y="90" width="105" height="50" rx="3" fill="white" opacity=".95" filter="url(#fs)"/>
+        <text x="263" y="112" font-size="8.5" fill="#8C6248" font-family="serif" letter-spacing="1.5">求職信心</text>
+        <rect x="263" y="119" width="62" height="2.5" rx="1" fill="rgba(192,82,26,.22)"/>
+        <rect x="263" y="126" width="40" height="2.5" rx="1" fill="rgba(192,82,26,.13)"/>
+        <circle cx="340" cy="112" r="7.5" fill="#DA6E34" opacity=".88"/>
+        <text x="337" y="116.5" font-size="9" fill="white" font-family="serif">↑</text>
+      </svg>
+    </div>
+    <div class="fc fc1"><div class="fc-ic">🎯</div><div><div class="fc-t">釐清職涯方向</div><div class="fc-s">找到最適合你的路</div></div></div>
+    <div class="fc fc2"><div class="fc-ic">✨</div><div><div class="fc-t">發掘內在優勢</div><div class="fc-s">讓天賦成為競爭力</div></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sp" style="background:var(--surf)">
+  <div class="wrap">
+    <div class="ag">
+      <div class="avis fd">
+        <div class="aframe"></div>
+        <div class="aimg">
+          <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:auto">
+            <rect width="300" height="360" fill="rgba(253,232,211,.3)"/>
+            <rect x="15" y="266" width="270" height="7" rx="3" fill="rgba(192,82,26,.11)"/>
+            <rect x="50" y="190" width="80" height="78" rx="2" fill="white" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
+            <rect x="50" y="190" width="8" height="78" rx="1" fill="rgba(192,82,26,.17)"/>
+            <rect x="62" y="202" width="52" height="2" rx="1" fill="rgba(192,82,26,.2)"/>
+            <rect x="62" y="210" width="42" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
+            <rect x="62" y="218" width="47" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
+            <rect x="62" y="226" width="36" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
+            <rect x="184" y="237" width="36" height="27" rx="4" fill="white" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
+            <path d="M220 247 Q229 247 229 255 Q229 263 220 263" fill="none" stroke="rgba(192,82,26,.17)" stroke-width="1.3"/>
+            <ellipse cx="202" cy="237" rx="18" ry="3.3" fill="rgba(192,82,26,.08)"/>
+            <path d="M195 231 Q197 225 195 219" fill="none" stroke="rgba(192,82,26,.23)" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M202 229 Q204 223 202 217" fill="none" stroke="rgba(192,82,26,.23)" stroke-width="1.3" stroke-linecap="round"/>
+            <rect x="245" y="242" width="17" height="23" rx="2" fill="rgba(192,82,26,.08)" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
+            <ellipse cx="253" cy="242" rx="16" ry="12.5" fill="#7BAF6F" opacity=".53"/>
+            <ellipse cx="241" cy="236" rx="11" ry="9" fill="#6A9E5E" opacity=".58"/>
+            <ellipse cx="265" cy="234" rx="10" ry="8" fill="#7BAF6F" opacity=".53"/>
+            <rect x="112" y="254" width="66" height="10" rx="3" fill="rgba(192,82,26,.11)"/>
+            <rect x="117" y="263" width="4" height="36" rx="2" fill="rgba(192,82,26,.08)"/>
+            <rect x="169" y="263" width="4" height="36" rx="2" fill="rgba(192,82,26,.08)"/>
+            <path d="M130 215 Q127 250 128 263 Q146 273 160 273 Q174 273 172 263 Q173 250 170 215Z" fill="#DA6E34" opacity=".83"/>
+            <rect x="148" y="196" width="12" height="21" rx="4.5" fill="#F5CBA7"/>
+            <ellipse cx="154" cy="174" rx="34" ry="39" fill="#F5CBA7"/>
+            <path d="M121 164 Q124 127 154 124 Q184 127 187 164 Q181 144 154 141 Q127 144 121 164Z" fill="#1C120A"/>
+            <path d="M121 164 Q116 176 118 189" fill="none" stroke="#1C120A" stroke-width="9" stroke-linecap="round"/>
+            <path d="M187 164 Q192 176 190 189" fill="none" stroke="#1C120A" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="140" cy="171" rx="5.8" ry="6.8" fill="white"/><ellipse cx="168" cy="171" rx="5.8" ry="6.8" fill="white"/>
+            <circle cx="141" cy="173" r="3.7" fill="#1C120A"/><circle cx="169" cy="173" r="3.7" fill="#1C120A"/>
+            <circle cx="142.5" cy="171.5" r="1.1" fill="white"/><circle cx="170.5" cy="171.5" r="1.1" fill="white"/>
+            <path d="M143 187 Q154 197 165 187" fill="none" stroke="#C0521A" stroke-width="1.8" stroke-linecap="round"/>
+            <ellipse cx="127" cy="181" rx="8.5" ry="5.5" fill="rgba(234,130,70,.2)"/>
+            <ellipse cx="181" cy="181" rx="8.5" ry="5.5" fill="rgba(234,130,70,.2)"/>
+            <path d="M130 220 Q106 232 88 240" fill="none" stroke="#F5CBA7" stroke-width="13" stroke-linecap="round"/>
+            <ellipse cx="84" cy="242" rx="10.5" ry="7" fill="#F5CBA7"/>
+            <path d="M170 220 Q194 232 205 238" fill="none" stroke="#F5CBA7" stroke-width="13" stroke-linecap="round"/>
+            <ellipse cx="209" cy="240" rx="10.5" ry="7" fill="#F5CBA7"/>
+          </svg>
+        </div>
+        <div class="achip"><div class="achip-n">CY</div><div class="achip-t">職涯諮詢師</div></div>
+      </div>
+      <div class="atxt">
+        <div class="lbl fd">關於我</div>
+        <h2 class="txl fd" style="margin-bottom:1.6rem">我是<em>貞貽 CY</em>，<br>你的職涯陪伴者</h2>
+        <p class="fd">歡迎來到我的職涯諮詢服務！我是 <strong>貞貽 CY</strong>，擁有超過 <strong>14 年</strong>橫跨零售通路、FMCG、顧問與餐飲業的豐富實戰經驗。</p>
+        <p class="fd" style="margin-top:1rem">在職涯諮詢的道路上，我累積了超過 <strong>200 小時</strong>諮詢時間，成功陪伴了超過 <strong>35 位夥伴</strong>找到職涯方向。</p>
+        <p class="fd" style="margin-top:1rem">我的方法是透過<strong>善於傾聽、分析歸納</strong>，結合市場實際經驗與資訊，幫助你明確目標、發掘潛力，找到最適合你的職涯發展路徑。</p>
+        <div class="pills fd">
+          <span class="pill">善於傾聽</span><span class="pill">分析歸納</span>
+          <span class="pill">市場實務經驗</span><span class="pill">牌卡諮詢</span>
+          <span class="pill">CNC 認證諮詢師</span><span class="pill">職涯規劃</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section id="service" class="sp" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="svchdr">
+      <div>
+        <div class="lbl fd">服務項目</div>
+        <h2 class="txl fd">找到你的<br><em>職涯答案</em></h2>
+      </div>
+      <p class="body fd">每個人的職涯困境都不同。我提供量身定制的諮詢，從方向釐清到求職策略，全方位陪伴你度過職涯轉折。</p>
+    </div>
+    <div class="svcg">
+      <div class="sc fd"><div class="scno">01</div><div class="scic">🧭</div><div class="scnm">職涯方向釐清與決策</div><p class="scdesc">系統性釐清選項，找出最符合你現況與潛力的方向。</p></div>
+      <div class="sc fd"><div class="scno">02</div><div class="scic">🔥</div><div class="scnm">尋找工作熱情與意義</div><p class="scdesc">探索真正讓你投入的事，找出工作與內在動力的連結。</p></div>
+      <div class="sc fd"><div class="scno">03</div><div class="scic">🃏</div><div class="scnm">職涯生涯牌卡諮詢</div><p class="scdesc">透過牌卡工具深度探索自我，直觀看見核心價值觀。</p></div>
+      <div class="sc fd"><div class="scno">04</div><div class="scic">🎯</div><div class="scnm">求職策略技巧</div><p class="scdesc">從目標職缺篩選到求職規劃，提升每次申請成功率。</p></div>
+      <div class="sc fd"><div class="scno">05</div><div class="scic">📄</div><div class="scnm">履歷優化／模擬面試</div><p class="scdesc">讓履歷真正說話，透過模擬面試找出答題盲點。</p></div>
+      <div class="sc fd"><div class="scno">06</div><div class="scic">💎</div><div class="scnm">如何運用天賦工作？</div><p class="scdesc">發現獨特天賦，找到能讓天賦發光的職位與環境。</p></div>
+      <div class="sc fd"><div class="scno">07</div><div class="scic">🧠</div><div class="scnm">心理調適負面想法</div><p class="scdesc">破除自我懷疑，重整思維框架，以正向心態面對挑戰。</p></div>
+      <div class="sc fd"><div class="scno">08</div><div class="scic">🌟</div><div class="scnm">建立職場自信</div><p class="scdesc">從內而外重建自信，知道自己的價值並敢於表達。</p></div>
+    </div>
+    <div class="pbar fd">
+      <div class="ptl">你是否也有這樣的困擾？</div>
+      <div class="psep"></div>
+      <div class="plist">
+        <div class="pit"><div class="pdot"></div><div class="ptx">不知道自己擅長什麼，也不知道能做什麼</div></div>
+        <div class="pit"><div class="pdot"></div><div class="ptx">擅長的事情能不能找到適合的好工作？</div></div>
+        <div class="pit"><div class="pdot"></div><div class="ptx">想轉職，但不知道從哪裡開始</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="sp">
+  <div class="wrap">
+    <div class="lbl fd">諮詢流程</div>
+    <h2 class="txl fd">四個步驟，<em>找回職涯自信</em></h2>
+    <div class="procg">
+      <div class="pstep fd"><div class="psn">01</div><div class="pst">初步了解與傾聽</div><p class="psd">深度了解你的現況、困惑與目標，建立安全的對話空間。</p></div>
+      <div class="pstep fd"><div class="psn">02</div><div class="pst">分析與歸納優勢</div><p class="psd">系統性梳理你的經歷、技能與價值觀，找出核心優勢。</p></div>
+      <div class="pstep fd"><div class="psn">03</div><div class="pst">制定個人化策略</div><p class="psd">提供具體可行的職涯方向與求職行動建議，量身打造。</p></div>
+      <div class="pstep fd"><div class="psn">04</div><div class="pst">持續陪伴與調整</div><p class="psd">我在你身旁提供持續支持，在每個轉折點做出更好選擇。</p></div>
+    </div>
+    <div class="procft fd">
+      <p>準備好開始你的<span>職涯探索之旅</span>了嗎？</p>
+      <button class="btn btp" style="font-size:.95rem;padding:1rem 2.5rem" onclick="goPage('booking')">預約免費諮詢 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust" class="sp" style="background:var(--or5)">
+  <div class="wrap">
+    <div class="lbl fd">學員心得</div>
+    <h2 class="txl fd">他們找到了<em>屬於自己的路</em></h2>
+    <div class="tg">
+      <div class="tc wide fd">
+        <div>
+          <div class="tstar"><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span></div>
+          <span class="tqm">"</span>
+          <div class="thi">從多種價值觀、職業、職能卡片中，重新認識自己的工作觀，發現對我而言不能妥協的事。</div>
+          <div class="tau"><div class="tav">S</div><div><div class="tanm">職涯探索學員</div><div class="taro">職涯方向釐清</div></div></div>
+        </div>
+        <div>
+          <p class="tbody">從諮詢師的角度看在現職遭遇的困難，釐清問題核心點，也從正向回饋和客觀分析中發現更好的做法，以及恢復信心。</p>
+          <p class="tbody">了解到自己面試回答不足以及不妥的地方。重新審視自己投的工作職缺，可能性以及多元性比自己想像中的多。</p>
+        </div>
+      </div>
+      <div class="tc fd">
+        <div class="tstar"><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span></div>
+        <span class="tqm">"</span>
+        <div class="thi">找到一個標竿，讓我有目標去努力。</div>
+        <p class="tbody">諮詢後重新審視自己的優勢，發現可以嘗試的方向比想像中更多，不再覺得職涯是一條只有一個方向的路。</p>
+        <div class="tau"><div class="tav">W</div><div><div class="tanm">跨產業轉職學員</div><div class="taro">求職策略規劃</div></div></div>
+      </div>
+      <div class="tc fd">
+        <div class="tstar"><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span><span class="ts">★</span></div>
+        <span class="tqm">"</span>
+        <div class="thi">把我混亂的思緒統整出來，給我一個思路讓我可以去評斷、去選擇。</div>
+        <p class="tbody">諮詢期間非常能傾聽我的想法並完整梳理現階段的能力與工作猶豫點，讓我能更了解我需要的是哪一種職涯。</p>
+        <div class="tau"><div class="tav">A</div><div><div class="tanm">職場迷茫解惑學員</div><div class="taro">職涯方向重建</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact-sec" class="sp" style="background:var(--surf)">
+  <div class="wrap">
+    <div class="cg">
+      <div>
+        <div class="lbl fd">聯絡我</div>
+        <h2 class="txl fd">讓我們<em>一起</em><br>探索你的職涯未來</h2>
+        <p class="ctag fd">期待與你見面，共同打造<span>屬於你的成功之路</span>。</p>
+        <div class="cmethods">
+          <a href="mailto:seminia1491@gmail.com" class="cm fd"><div class="cmic">✉️</div><div><div class="cmlbl">Email</div><div class="cmval">seminia1491@gmail.com</div></div></a>
+          <a href="#" class="cm fd"><div class="cmic">💬</div><div><div class="cmlbl">LINE</div><div class="cmval">@902rnnqs</div></div></a>
+          <div class="cm fd" onclick="goPage('booking')"><div class="cmic">📅</div><div><div class="cmlbl">線上預約</div><div class="cmval">點此選擇諮詢時段 →</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="lbl fd">傳送訊息</div>
+        <div class="fw fd">
+          <div class="frow">
+            <div><label class="fl">姓名 *</label><input type="text" class="fi" id="hN" placeholder="請輸入姓名"></div>
+            <div><label class="fl">聯絡方式 *</label><input type="text" class="fi" id="hC" placeholder="Email 或 LINE ID"></div>
+          </div>
+          <div><label class="fl">目前遇到的困擾</label><input type="text" class="fi" id="hT" placeholder="例如：想轉職但不知道方向"></div>
+          <div><label class="fl">想跟我說的話</label><textarea class="fta" id="hM" placeholder="描述你目前的職涯狀況..."></textarea></div>
+          <button class="btn btp" style="width:100%;justify-content:center;padding:1rem" onclick="submitH()">送出訊息 →</button>
+          <div class="ftoast" id="hToast">✓ 訊息已送出！我會盡快與你聯繫，期待我們的相遇 🌟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /home -->
+
+<!-- ══════════════ BOOKING ══════════════ -->
+<div id="page-booking" class="page">
+  <div class="bkhero">
+    <div class="wrap">
+      <div class="lbl" style="justify-content:center">預約諮詢</div>
+      <h1 class="txl" style="color:#fff;text-align:center;margin-bottom:.8rem">選擇你的<em style="color:var(--or3)">諮詢時段</em></h1>
+      <p>選擇方便的日期與時間，提供 60 分鐘深度職涯諮詢，陪伴你找到屬於自己的方向。</p>
+    </div>
+  </div>
+  <div class="bkbody">
+    <div class="wrap">
+      <div class="bklay">
+        <div>
+          <div class="calbox">
+            <div class="calhdr">
+              <div class="calmth" id="calmth"></div>
+              <div class="calnav">
+                <div class="calbtn" id="cprev" onclick="chMth(-1)">‹</div>
+                <div class="calbtn" id="cnext" onclick="chMth(1)">›</div>
+              </div>
+            </div>
+            <div class="caldow"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+            <div class="caldays" id="caldays"></div>
+          </div>
+          <div class="timebox" id="timebox" style="display:none">
+            <div class="timettl" id="timelbl"></div>
+            <div class="timeslots" id="timeslots"></div>
+          </div>
+        </div>
+        <div class="bkpanel">
+          <div class="bktoast" id="bktoast">
+            <div class="bktic">🎉</div>
+            <div class="bktt">預約成功！</div>
+            <div class="bkts" id="bktoastd"></div>
+          </div>
+          <div id="bkfw">
+            <div class="bksel"><div class="bksttl">已選擇時段</div><div class="bksval emp" id="seldisp">請先從左側選擇日期</div></div>
+            <div class="bkform">
+              <div><label class="fl">姓名 *</label><input type="text" class="fi" id="bN" placeholder="請輸入您的姓名"></div>
+              <div><label class="fl">Email *</label><input type="email" class="fi" id="bE" placeholder="您的電子郵件"></div>
+              <div><label class="fl">LINE ID / 電話</label><input type="text" class="fi" id="bL" placeholder="方便聯繫的方式"></div>
+              <div><label class="fl">想諮詢的主題</label>
+                <select class="fi" id="bTp" style="cursor:pointer">
+                  <option value="">請選擇主要困擾</option>
+                  <option>職涯方向釐清</option><option>尋找工作熱情</option>
+                  <option>牌卡諮詢</option><option>求職策略</option>
+                  <option>履歷優化／模擬面試</option><option>如何運用天賦</option>
+                  <option>心理調適</option><option>建立職場自信</option>
+                </select>
+              </div>
+              <div><label class="fl">補充說明</label><textarea class="fta" id="bNo" placeholder="簡短描述你目前的狀況..." style="min-height:85px"></textarea></div>
+              <button class="btn btp" style="width:100%;justify-content:center;padding:1rem" onclick="submitBk()">確認預約 →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BLOG ══════════════ -->
+<div id="page-blog" class="page">
+  <div id="blg-list">
+    <div class="blghero">
+      <div class="wrap">
+        <div class="lbl">職涯部落格</div>
+        <h1 class="txl" style="margin-bottom:1rem">職涯<em>知識庫</em></h1>
+        <p class="body" style="max-width:480px">分享職涯探索的心法、求職技巧與轉職故事，陪你在職涯旅途上走得更穩、更有方向。</p>
+        <div class="bsrow">
+          <input type="text" class="bsrch" placeholder="搜尋文章..." oninput="filterP(this.value)">
+          <div class="bcats" id="bcats"></div>
+        </div>
+      </div>
+    </div>
+    <div class="blgbody">
+      <div class="wrap">
+        <div class="blglay">
+          <div><div class="blggrid" id="blggrid"></div></div>
+          <div class="blgsb">
+            <div class="sbbox"><div class="sbttl">最新文章</div><div id="rpost"></div></div>
+            <div class="sbbox"><div class="sbttl">熱門標籤</div><div class="tagcl" id="tagcl"></div></div>
+            <div class="sbbox" style="background:var(--or1);border-color:var(--or1)">
+              <div style="font-size:.68rem;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.7rem">立即預約</div>
+              <p style="font-size:.86rem;color:#fff;line-height:1.8;margin-bottom:1.1rem">想更進一步？預約一對一職涯諮詢，讓我陪你找到方向。</p>
+              <button class="btn" style="background:#fff;color:var(--or1);font-size:.78rem;padding:.58rem 1.1rem;width:100%;justify-content:center" onclick="goPage('booking')">預約諮詢 →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="blg-post" style="display:none">
+    <div class="posthero">
+      <div class="wrap">
+        <div class="lbl" id="pcat"></div>
+        <h1 id="ptitle"></h1>
+        <div class="postmeta"><span id="pdate"></span><span class="bmdot"></span><span id="pread"></span><span class="bmdot"></span><span>CY 小孔</span></div>
+      </div>
+    </div>
+    <div class="postbody">
+      <div class="wrap">
+        <div class="postlay">
+          <div class="postcont">
+            <button class="pbk" onclick="closePost()">← 返回文章列表</button>
+            <div id="pcont"></div>
+            <div style="margin-top:3rem;padding-top:2.3rem;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+              <div>
+                <div style="font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.4rem">覺得有幫助？</div>
+                <div style="font-size:.86rem;color:var(--mid)">歡迎預約一對一深度諮詢，讓我陪你找到自己的職涯方向。</div>
+              </div>
+              <button class="btn btp" onclick="goPage('booking')">預約諮詢 →</button>
+            </div>
+          </div>
+          <div class="posttoc">
+            <div class="posttoc-t">文章大綱</div>
+            <div id="ptoc"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftl">CY 小孔 · 職涯諮詢師</div>
+  <div class="ftc">© 2024 CY 小孔. All rights reserved.</div>
+  <div class="ftlinks">
+    <a href="#" onclick="goHome(event,'#about')">關於我</a>
+    <a href="#" onclick="goHome(event,'#service')">服務</a>
+    <a href="#" onclick="goPage('booking',event)">預約</a>
+    <a href="#" onclick="goPage('blog',event)">部落格</a>
+    <a href="mailto:seminia1491@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+/* ── DATA ── */
+const POSTS=[
+  {id:1,cat:'職涯探索',title:'不知道自己適合什麼？試試這三個問題找到方向',excerpt:'很多人在職涯困惑的核心，其實都是同一個問題：「我是誰？我擅長什麼？」今天分享三個強大的自我探索問題，幫你開始梳理。',date:'2024-11-15',read:'8 分鐘',emoji:'🧭',tags:['自我探索','職涯方向','轉職'],content:`<h2>你真正的問題是什麼？</h2><p>在諮詢超過 35 位夥伴之後，我發現大多數人的職涯困惑，都不是「我找不到工作」，而是「我不知道自己要什麼」。</p><p>這聽起來抽象，但其實是一個可以被拆解、被回答的問題。今天，我分享三個我在諮詢中最常使用的自我探索問題。</p><h2>問題一：什麼時候你最投入、最忘記時間？</h2><p>心理學家 Csikszentmihalyi 稱這種狀態為「Flow（心流）」。當你做某件事進入心流，往往代表那件事同時符合了你的能力水準與挑戰程度。</p><blockquote>試著回想過去三個月，有哪三個時刻讓你完全忘記時間？把它們寫下來，找共同點。</blockquote><h2>問題二：你解決什麼問題讓別人覺得容易，自己卻覺得理所當然？</h2><p>我們的天賦，往往藏在那些「對自己來說很簡單、但別人卻很佩服」的事情裡。正因為太自然，我們反而不覺得這是優勢。</p><ul><li>同事遇到困難第一個找你問的是什麼？</li><li>朋友說「你很厲害的地方」是什麼？</li><li>什麼事情你不需要特別努力就做得比別人好？</li></ul><h2>問題三：如果不考慮薪水，你願意花時間做什麼？</h2><p>這個問題是要幫你過濾掉「外在壓力」，找到真正的內在驅動力。答案不一定是你的職業，但它會給你重要的線索。</p><h2>把答案放在一起看</h2><p>當你回答完這三個問題，試著把答案排列在一起。你會開始看到模式：某些技能、某些場景，不斷重複出現。那裡，就是你職涯方向的起點。</p><blockquote>如果你想要更深入地探索，歡迎預約一對一諮詢。我會陪你一起把這些線索，轉化成清晰的職涯地圖。</blockquote>`},
+  {id:2,cat:'求職技巧',title:'面試緊張說不出口？這五個準備技巧讓你自信開口',excerpt:'面試緊張是正常的，但緊張到大腦空白、說不出口，就需要系統性的準備了。分享讓我輔導過數十位學員都有感的技巧。',date:'2024-11-08',read:'6 分鐘',emoji:'🎤',tags:['面試技巧','求職','自信'],content:`<h2>面試緊張的根源</h2><p>在陪伴學員準備面試的過程中，我發現緊張的來源通常有兩種：一是「準備不足」帶來的焦慮，二是「過度在意結果」帶來的壓力。好消息是，這兩種都可以透過系統性準備來緩解。</p><h2>技巧一：STAR 法則，讓你的故事有骨架</h2><p>STAR 是 Situation（情境）、Task（任務）、Action（行動）、Result（結果）的縮寫。每一個行為面試題，都可以用這個架構來回答。</p><blockquote>準備 5–8 個你的職涯亮點故事，用 STAR 架構寫出來，這些故事可以回答 80% 的面試問題。</blockquote><h2>技巧二：模擬面試，打破「腦中很清楚，嘴巴說不出」的魔咒</h2><p>很多人以為自己準備好了，但真正說出口才發現——思路斷掉、邏輯混亂。模擬面試就是要在安全環境下，提前踩過這些坑。</p><ul><li>對著鏡子練習，觀察自己的表情和肢體語言</li><li>錄影練習，事後回放找出需要改進的地方</li><li>找朋友或諮詢師進行模擬面試，得到真實回饋</li></ul><h2>技巧三：研究公司，讓你的答案更有針對性</h2><p>面試前，花至少兩小時研究這家公司：產品、文化、最近的新聞、對這個職位的期待。當你真正了解一家公司，你的回答會自然帶出契合感。</p><h2>技巧四：準備你的「關鍵賣點」清單</h2><p>整理出三到五個你最想讓面試官知道的事情。不管問你什麼問題，都要找機會把這些賣點帶進去。這讓你從被動回答，變成主動展示。</p><h2>技巧五：面試前的「暖機」儀式</h2><p>面試前 30 分鐘，做幾個讓你感到放鬆的事：深呼吸、回顧自己的成功故事、聽讓你有能量的音樂。研究顯示，「高能量姿勢」也能在短時間內提升自信感。</p>`},
+  {id:3,cat:'心理調適',title:'轉職焦慮怎麼辦？三個框架幫你重新看待不確定性',excerpt:'轉職，本質上是一個充滿不確定性的過程。很多人卡在這裡，不是因為能力不夠，而是因為焦慮讓他們原地踏步。',date:'2024-10-28',read:'7 分鐘',emoji:'🧘',tags:['心理調適','轉職','焦慮'],content:`<h2>焦慮的本質</h2><p>轉職焦慮，其實是大腦在試圖保護你。面對未知，大腦的預設反應是「危險！別去！」——這是人類進化留下來的機制，但在職涯發展上往往讓我們停在一個「不夠好但至少熟悉」的地方。</p><h2>框架一：區分「真實風險」和「想像風險」</h2><p>當你對某個職涯決定感到焦慮，試著問自己：</p><ul><li>最壞的情況是什麼？</li><li>這個最壞的情況發生的機率有多高？</li><li>如果真的發生了，我有辦法應對嗎？</li></ul><blockquote>大多數時候，我們會發現：最壞的情況不那麼壞，發生的機率不那麼高，而且就算發生，我們也有辦法處理。</blockquote><h2>框架二：把決定當成「實驗」而不是「賭注」</h2><p>我們對轉職感到焦慮，往往是因為把它當成「一次定生死」的重大賭注。如果你把它當成一個「實驗」呢？實驗可以失敗，失敗了你會學到東西，然後再試一次。</p><h2>框架三：關注「可控」的事，放下「不可控」的事</h2><p>轉職焦慮常常來自把注意力放在不可控的事情上。試著轉移到可控的事情：我今天可以優化履歷、練習一個面試題目、聯繫一個業界人士。每一個可控的小行動，都會慢慢累積成轉職的動能。</p>`},
+  {id:4,cat:'履歷技巧',title:'履歷一頁還是兩頁？HR 視角告訴你真正的答案',excerpt:'「我的履歷要幾頁？」是學員最常問的問題之一。今天用 HR 的視角，告訴你影響這個決定的真正關鍵因素。',date:'2024-10-15',read:'5 分鐘',emoji:'📄',tags:['履歷','求職','HR觀點'],content:`<h2>這個問題沒有標準答案</h2><p>先說結論：履歷的頁數不是重點，資訊的密度和相關性才是重點。一份兩頁但充滿水分的履歷，遠不如一份一頁但每個字都有分量的履歷。</p><h2>什麼情況下一頁比較好？</h2><ul><li>工作經驗少於 5 年</li><li>職涯路徑清晰，沒有太多需要解釋的轉折</li><li>應徵的職位相對單純，不需要展示大量不同面向的能力</li></ul><h2>什麼情況下兩頁是合理的？</h2><ul><li>工作經驗超過 8–10 年</li><li>有多個值得展示的重要成就和項目</li><li>應徵資深或管理職位，需要展示更廣泛的能力</li></ul><blockquote>一個簡單的判斷方式：如果你刪掉第二頁之後，損失了重要的相關資訊，那兩頁是合理的。如果刪掉之後影響不大，就維持一頁。</blockquote><h2>比頁數更重要的三件事</h2><p>無論一頁還是兩頁，這三件事比頁數本身更重要：第一是量化成就，用數字說話；第二是針對職位客製化內容；第三是格式清晰，讓 HR 在 10 秒內找到重點。</p>`},
+  {id:5,cat:'職場故事',title:'從零售業轉到科技業：一位學員的真實轉職旅程',excerpt:'Jenny 在零售業工作了 6 年，一直想轉到科技業，但不知道從哪裡開始。分享她的真實轉職故事，以及諮詢過程中的關鍵突破點。',date:'2024-09-30',read:'10 分鐘',emoji:'🚀',tags:['轉職故事','職場','跨產業'],content:`<h2>Jenny 的故事（化名）</h2><p>Jenny 來找我諮詢的時候，在一家連鎖零售品牌做了 6 年的區域督導。她很清楚自己想轉到科技業，但卡在同一個問題：「我沒有科技背景，人家為什麼要用我？」</p><p>這是跨產業轉職中最常見的心理障礙——我們只看到自己的「不足」，看不到自己的「可移轉優勢」。</p><h2>第一個突破：重新定義「背景」</h2><p>在諮詢過程中，我請 Jenny 列出她這 6 年做過的事。當她一一列出來，我幫她換了一個角度：</p><ul><li>管理 12 家門市的 KPI 追蹤 → 數據分析與績效管理能力</li><li>協調供應鏈與門市庫存 → 跨部門協作與流程優化</li><li>培訓新進人員 → 知識萃取與教育設計</li><li>每季向總部報告 → 簡報與溝通能力</li></ul><blockquote>「原來我做的事情，在科技業也很有價值。」這是很多跨產業轉職者的共同頓悟時刻。</blockquote><h2>第二個突破：鎖定目標職位</h2><p>我們分析了科技業中哪些職位最能讓 Jenny 的背景發揮：Customer Success Manager 是最匹配的選項。這個職位需要的正是她最擅長的東西：理解客戶需求、解決問題、建立關係。</p><h2>結果</h2><p>三個月後，Jenny 成功拿到一家 B2B SaaS 公司的 Customer Success 職位，薪水比之前提高了 25%。她說：「如果沒有諮詢，我可能還在懷疑自己能不能轉成功。」</p>`},
+  {id:6,cat:'職涯探索',title:'如何找到你的工作價值觀？這份清單幫你釐清',excerpt:'工作價值觀是你對「什麼樣的工作是好工作」的深層信念。了解自己的工作價值觀，是找到長期職涯滿足感的關鍵。',date:'2024-09-18',read:'6 分鐘',emoji:'💎',tags:['工作價值觀','自我探索','職涯滿足'],content:`<h2>什麼是工作價值觀？</h2><p>工作價值觀，是你對「什麼樣的工作是好工作」的深層信念與優先順序。當你的工作與你的價值觀一致，你會感到有意義、有動力；當它們相違背，即使薪水再高，你也會感到空洞和疲憊。</p><h2>常見的工作價值觀清單</h2><ul><li>自主性：我想要有彈性，自己決定工作方式</li><li>影響力：我想要看到我的工作對別人有實質影響</li><li>成長：我想要持續學習和進步</li><li>穩定性：我重視工作的安全感和可預測性</li><li>創意：我想要有空間做創新和創意性的工作</li><li>人際：我想要與有趣的人一起工作</li><li>報酬：我重視財務上的回報和認可</li><li>使命：我想要為更大的目標做出貢獻</li></ul><h2>如何找到你的前三名？</h2><blockquote>把上面的清單打印出來，用刪去法：先刪掉你覺得最不重要的一半，再從剩下的裡面找出你的前三名。這三個，就是你職涯決策的核心指南針。</blockquote><p>當你面對職涯選擇時，把選項拿來對照你的前三名價值觀：哪個選項最能讓你的核心價值得到滿足？答案往往就在那裡。</p>`}
+];
+const CATS=['全部','職涯探索','求職技巧','心理調適','履歷技巧','職場故事'];
+const TAGS=['自我探索','職涯方向','轉職','面試技巧','求職','自信','心理調適','焦慮','履歷','HR觀點','跨產業','工作價值觀'];
+let curCat='全部';
+
+/* ── ROUTER ── */
+function goPage(pg,e){
+  if(e) e.preventDefault();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.nlinks a').forEach(a=>{a.classList.remove('on');if(a.dataset.pg===pg)a.classList.add('on')});
+  if(pg==='blog') renderBlog();
+  if(pg==='booking') initCal();
+  obsFade();
+}
+function goHome(e,hash){
+  if(e) e.preventDefault();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  document.querySelectorAll('.nlinks a').forEach(a=>a.classList.remove('on'));
+  setTimeout(()=>{const el=document.querySelector(hash);if(el)el.scrollIntoView({behavior:'smooth'})},80);
+  obsFade();
+}
+function sTo(h){const el=document.querySelector(h);if(el)el.scrollIntoView({behavior:'smooth'})}
+
+/* ── NAV ── */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('shd',scrollY>30));
+function togDrawer(){
+  document.getElementById('drw').classList.toggle('open');
+  document.getElementById('hbg').classList.toggle('open');
+}
+
+/* ── FADE ── */
+function obsFade(){
+  setTimeout(()=>{
+    const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.fd:not(.in)').forEach(el=>obs.observe(el));
+  },50);
+}
+// Hero entrance
+(()=>{
+  document.querySelectorAll('.hl>*').forEach((el,i)=>{
+    el.style.cssText=`opacity:0;transform:translateY(22px);transition:opacity .6s ease ${i*.1}s,transform .6s ease ${i*.1}s`;
+    setTimeout(()=>{el.style.opacity=1;el.style.transform='none'},80+i*80);
+  });
+})();
+obsFade();
+
+/* ── HOME FORM ── */
+function submitH(){
+  const n=document.getElementById('hN').value.trim(),c=document.getElementById('hC').value.trim();
+  if(!n||!c){alert('請填寫姓名和聯絡方式 ✨');return}
+  const t=document.getElementById('hToast');
+  t.style.display='block';
+  ['hN','hC','hT','hM'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(()=>t.style.display='none',5000);
+}
+
+/* ── BOOKING ── */
+let cy,cm,sd,st;
+const BOOKED={'15':['10:00','14:00'],'20':['09:00','11:00','16:00'],'22':['13:00'],'28':['10:00','15:00']};
+const TIMES=['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+const MN=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+const MNS=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+
+function initCal(){
+  const now=new Date();cy=now.getFullYear();cm=now.getMonth();sd=null;st=null;
+  renderCal();updSel();
+  document.getElementById('bkfw').style.display='block';
+  document.getElementById('bktoast').style.display='none';
+  document.getElementById('timebox').style.display='none';
+}
+function renderCal(){
+  document.getElementById('calmth').textContent=cy+' 年 '+MN[cm];
+  const fd=new Date(cy,cm,1).getDay(),dim=new Date(cy,cm+1,0).getDate();
+  const today=new Date();today.setHours(0,0,0,0);
+  const g=document.getElementById('caldays');g.innerHTML='';
+  for(let i=0;i<fd;i++){const b=document.createElement('div');b.className='cday inact';g.appendChild(b)}
+  for(let d=1;d<=dim;d++){
+    const el=document.createElement('div');el.className='cday';el.textContent=d;
+    const cd=new Date(cy,cm,d);
+    if(cd<today){el.classList.add('past')}
+    else{
+      const bk=BOOKED[String(d)]||[];
+      if(TIMES.length-bk.length>0)el.classList.add('hs');
+      if(cd.toDateString()===today.toDateString())el.classList.add('today');
+      el.addEventListener('click',()=>selDay(d));
+    }
+    if(sd===d)el.classList.add('sel');
+    g.appendChild(el);
+  }
+  const now=new Date();
+  const isPast=cy===now.getFullYear()&&cm<=now.getMonth();
+  document.getElementById('cprev').style.cssText=isPast?'opacity:.28;pointer-events:none':'';
+}
+function chMth(d){cm+=d;if(cm>11){cm=0;cy++}if(cm<0){cm=11;cy--}renderCal()}
+function selDay(d){
+  sd=d;st=null;
+  document.querySelectorAll('.cday').forEach(el=>{el.classList.remove('sel');if(parseInt(el.textContent)===d&&!el.classList.contains('inact')&&!el.classList.contains('past'))el.classList.add('sel')});
+  renderSlots(d);updSel();
+}
+function renderSlots(d){
+  const bk=BOOKED[String(d)]||[];
+  document.getElementById('timelbl').textContent=cy+' 年 '+MNS[cm]+' 月 '+d+' 日 · 可預約時段';
+  const g=document.getElementById('timeslots');g.innerHTML='';
+  TIMES.forEach(t=>{
+    const s=document.createElement('div');
+    s.className='tslot'+(bk.includes(t)?' bk':'');s.textContent=t;
+    if(!bk.includes(t))s.addEventListener('click',()=>{st=t;document.querySelectorAll('.tslot').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');updSel()});
+    g.appendChild(s);
+  });
+  document.getElementById('timebox').style.display='block';
+}
+function updSel(){
+  const el=document.getElementById('seldisp');
+  if(sd&&st){el.textContent=cy+'年'+MNS[cm]+'月'+sd+'日 · '+st+'（60 分鐘）';el.className='bksval'}
+  else if(sd){el.textContent='已選擇日期，請選擇時間';el.className='bksval'}
+  else{el.textContent='請先從左側選擇日期';el.className='bksval emp'}
+}
+function submitBk(){
+  const n=document.getElementById('bN').value.trim(),e=document.getElementById('bE').value.trim();
+  if(!n||!e){alert('請填寫姓名和 Email ✨');return}
+  if(!sd||!st){alert('請先選擇諮詢日期與時間 📅');return}
+  document.getElementById('bkfw').style.display='none';
+  const t=document.getElementById('bktoast');
+  document.getElementById('bktoastd').textContent='諮詢時間：'+cy+'年'+MNS[cm]+'月'+sd+'日 '+st+'\n我會盡快以 Email 與您確認預約細節！';
+  t.style.display='block';
+}
+
+/* ── BLOG ── */
+function renderBlog(){
+  const cg=document.getElementById('bcats');cg.innerHTML='';
+  CATS.forEach(c=>{const b=document.createElement('div');b.className='bcat'+(c===curCat?' on':'');b.textContent=c;b.onclick=()=>{curCat=c;document.querySelectorAll('.bcat').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderPL(document.querySelector('.bsrch').value)};cg.appendChild(b)});
+  renderPL('');
+  const rp=document.getElementById('rpost');rp.innerHTML='';
+  POSTS.slice(0,4).forEach(p=>{rp.innerHTML+=`<div class="ritem" onclick="openPost(${p.id})"><div class="ritm-t">${p.title}</div><div class="ritm-d">${p.date}</div></div>`});
+  const tc=document.getElementById('tagcl');tc.innerHTML='';
+  TAGS.forEach(t=>{tc.innerHTML+=`<div class="tagit">${t}</div>`});
+}
+function renderPL(q=''){
+  const g=document.getElementById('blggrid');
+  let ps=POSTS;
+  if(curCat!=='全部')ps=ps.filter(p=>p.cat===curCat);
+  if(q)ps=ps.filter(p=>p.title.includes(q)||p.excerpt.includes(q)||p.tags.some(t=>t.includes(q)));
+  g.innerHTML='';
+  if(!ps.length){g.innerHTML='<p style="color:var(--mut);font-size:.9rem">沒有找到相關文章。</p>';return}
+  ps.forEach(p=>{
+    g.innerHTML+=`<div class="bcard" onclick="openPost(${p.id})">
+      <div class="bcbody">
+        <div class="bccat">${p.cat}</div>
+        <div class="bctitle">${p.title}</div>
+        <div class="bcex">${p.excerpt}</div>
+        <div class="bmeta"><span>${p.date}</span><span class="bmdot"></span><span>${p.read}閱讀</span><span class="bmdot"></span><span>${p.tags.slice(0,2).map(t=>'#'+t).join(' ')}</span></div>
+      </div>
+      <div class="bcthumb"><div class="bcthumb-ic">${p.emoji}</div><div class="bcthumb-t">${p.cat}</div></div>
+    </div>`;
+  });
+}
+function filterP(v){renderPL(v)}
+function openPost(id){
+  const p=POSTS.find(x=>x.id===id);if(!p)return;
+  document.getElementById('pcat').textContent=p.cat;
+  document.getElementById('ptitle').textContent=p.title;
+  document.getElementById('pdate').textContent=p.date;
+  document.getElementById('pread').textContent=p.read+'閱讀';
+  document.getElementById('pcont').innerHTML=p.content;
+  const toc=document.getElementById('ptoc');toc.innerHTML='';
+  document.querySelectorAll('#pcont h2').forEach((h,i)=>{
+    h.id='h'+i;
+    toc.innerHTML+=`<div class="toclink" onclick="document.getElementById('h${i}').scrollIntoView({behavior:'smooth'})">${h.textContent}</div>`;
+  });
+  document.getElementById('blg-list').style.display='none';
+  document.getElementById('blg-post').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function closePost(){
+  document.getElementById('blg-list').style.display='block';
+  document.getElementById('blg-post').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
