@@ -40,7 +40,7 @@ button,input,textarea,select{font-family:inherit}
 .nlinks a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--or1);transition:width var(--tr)}
 .nlinks a:hover,.nlinks a.on{color:var(--or1)}
 .nlinks a:hover::after,.nlinks a.on::after{width:100%}
-.nbtn{padding:.48rem 1.25rem;background:var(--or1);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.09em;border:none;cursor:pointer;transition:background var(--tr),transform var(--tr)}
+.nbtn{padding:.48rem 1.25rem;background:var(--or1);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.09em;border:none;cursor:pointer;transition:background var(--tr),transform var(--tr);border-radius:100px}
 .nbtn:hover{background:var(--or2);transform:translateY(-1px)}
 .hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.3rem}
 .hbg span{display:block;width:22px;height:1.5px;background:var(--or1);transition:.28s}
@@ -67,10 +67,10 @@ button,input,textarea,select{font-family:inherit}
 .body{font-size:.91rem;color:var(--mut);line-height:2.1}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f);font-size:.85rem;font-weight:600;letter-spacing:.08em;cursor:pointer;border:none;transition:all var(--tr)}
-.btp{padding:.85rem 2rem;background:var(--or1);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f);font-size:.85rem;font-weight:600;letter-spacing:.08em;cursor:pointer;border:none;transition:all var(--tr);border-radius:100px}
+.btp{padding:.85rem 2rem;background:var(--or1);color:#fff;border-radius:100px}
 .btp:hover{background:var(--or2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(192,82,26,.25)}
-.bto{padding:.8rem 1.8rem;background:transparent;color:var(--or1);border:1.5px solid var(--or1)}
+.bto{padding:.8rem 1.8rem;background:transparent;color:var(--or1);border:1.5px solid var(--or1);border-radius:100px}
 .bto:hover{background:var(--or1);color:#fff}
 .btg{padding:.8rem 0;background:transparent;color:var(--mid);border-bottom:1px solid currentColor;border-radius:0;font-size:.85rem}
 .btg:hover{color:var(--or1)}
@@ -84,7 +84,7 @@ button,input,textarea,select{font-family:inherit}
 .fd:nth-child(8){transition-delay:.49s}
 
 /* FORM ELEMENTS */
-.fi,.fta{width:100%;padding:.88rem 1.1rem;border:1px solid var(--bdr);background:var(--or5);color:var(--txt);font-family:var(--f);font-size:.88rem;outline:none;border-radius:0;-webkit-appearance:none;transition:border-color var(--tr),background var(--tr)}
+.fi,.fta{width:100%;padding:.88rem 1.1rem;border:1px solid var(--bdr);background:var(--or5);color:var(--txt);font-family:var(--f);font-size:.88rem;outline:none;border-radius:10px;-webkit-appearance:none;transition:border-color var(--tr),background var(--tr)}
 .fi:focus,.fta:focus{border-color:var(--or2);background:#fff}
 .fta{resize:vertical;min-height:115px}
 .fl{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--mut);display:block;margin-bottom:.38rem}
@@ -124,8 +124,9 @@ button,input,textarea,select{font-family:inherit}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .ag{display:grid;grid-template-columns:1fr 1.12fr;gap:5.5rem;align-items:center}
 .avis{position:relative}
-.aimg{width:100%;aspect-ratio:3/4;background:var(--or5);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.aframe{position:absolute;top:-10px;left:-10px;right:10px;bottom:10px;border:1px solid var(--bdr2);pointer-events:none}
+.aimg{width:100%;aspect-ratio:3/4;background:var(--or5);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:18px}
+.aimg img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.aframe{position:absolute;top:-10px;left:-10px;right:10px;bottom:10px;border:1px solid var(--bdr2);pointer-events:none;border-radius:22px}
 .achip{position:absolute;bottom:-1.1rem;right:-1.1rem;background:var(--or1);color:#fff;padding:1rem 1.3rem;z-index:2}
 .achip-n{font-size:1.8rem;font-weight:800;line-height:1}
 .achip-t{font-size:.67rem;letter-spacing:.1em;opacity:.85;margin-top:.18rem}
@@ -262,10 +263,10 @@ button,input,textarea,select{font-family:inherit}
 #page-blog{padding-top:var(--nav)}
 .blghero{background:var(--surf);padding:4.5rem 0 3rem}
 .bsrow{display:flex;gap:1rem;margin-top:1.8rem;align-items:center;flex-wrap:wrap}
-.bsrch{flex:1;min-width:180px;padding:.75rem 1.1rem;border:1px solid var(--bdr);background:var(--bg);font-family:var(--f);font-size:.87rem;color:var(--txt);outline:none;border-radius:0}
+.bsrch{flex:1;min-width:180px;padding:.75rem 1.1rem;border:1px solid var(--bdr);background:var(--bg);font-family:var(--f);font-size:.87rem;color:var(--txt);outline:none;border-radius:100px}
 .bsrch:focus{border-color:var(--or1)}
 .bcats{display:flex;gap:.45rem;flex-wrap:wrap}
-.bcat{padding:.42rem .95rem;border:1px solid var(--bdr);background:var(--bg);font-size:.73rem;font-weight:600;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all var(--tr)}
+.bcat{padding:.42rem .95rem;border:1px solid var(--bdr);background:var(--bg);font-size:.73rem;font-weight:600;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all var(--tr);border-radius:100px}
 .bcat:hover,.bcat.on{background:var(--or1);color:#fff;border-color:var(--or1)}
 .blgbody{padding:3.8rem 0 6rem}
 .blglay{display:grid;grid-template-columns:1fr 285px;gap:3.2rem;align-items:start}
@@ -315,6 +316,37 @@ button,input,textarea,select{font-family:inherit}
 .pbk{display:inline-flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--or1);cursor:pointer;margin-bottom:1.8rem;background:none;border:none;transition:gap var(--tr)}
 .pbk:hover{gap:.9rem}
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOME — PRICING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.pricg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem}
+.pricard{background:var(--surf);border:1.5px solid var(--bdr);border-radius:20px;padding:2.4rem 2rem;position:relative;overflow:hidden;transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);display:flex;flex-direction:column}
+.pricard:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(46,28,15,.1);border-color:var(--or3)}
+.pricard.featured{background:var(--or1);border-color:var(--or1)}
+.pricard.featured .pritag,.pricard.featured .priname,.pricard.featured .priprice,.pricard.featured .priunit,.pricard.featured .pridesc,.pricard.featured .priflow-ttl{color:#fff}
+.pricard.featured .pribadge{background:rgba(255,255,255,.22);color:#fff}
+.pricard.featured .priflow li{color:rgba(255,255,255,.75)}
+.pricard.featured .priflow li::before{background:rgba(255,255,255,.6)}
+.pricard.featured:hover{box-shadow:0 18px 48px rgba(192,82,26,.35)}
+.pricard.featured .pricta{background:#fff;color:var(--or1)}
+.pricard.featured .pricta:hover{background:var(--or4)}
+.pribadge{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .85rem;background:var(--or5);border-radius:100px;font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or2);margin-bottom:1.3rem;width:fit-content}
+.priname{font-size:1.05rem;font-weight:700;color:var(--dk);margin-bottom:.5rem;line-height:1.4}
+.pritag{font-size:.78rem;color:var(--mut);margin-bottom:1.6rem;line-height:1.7}
+.priprice{font-size:2.6rem;font-weight:800;color:var(--or1);line-height:1}
+.pricard.featured .priprice{color:#fff}
+.priunit{font-size:.78rem;color:var(--mut);margin-top:.3rem;margin-bottom:1.6rem}
+.priflow-ttl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.8rem}
+.priflow{list-style:none;margin-bottom:2rem;flex:1}
+.priflow li{font-size:.82rem;color:var(--mut);padding:.32rem 0 .32rem 1.1rem;position:relative;line-height:1.6}
+.priflow li::before{content:'';position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:50%;background:var(--or3)}
+.pricta{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem;background:var(--or1);color:#fff;font-family:var(--f);font-size:.85rem;font-weight:600;letter-spacing:.07em;border:none;cursor:pointer;border-radius:100px;transition:all var(--tr);margin-top:auto}
+.pricta:hover{background:var(--or2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,82,26,.3)}
+.prix-note{margin-top:3rem;padding:2rem 2.5rem;background:var(--or5);border:1px solid var(--bdr);border-radius:16px;display:flex;align-items:start;gap:1.2rem}
+.prix-ic{font-size:1.4rem;flex-shrink:0;margin-top:.1rem}
+.prix-txt{font-size:.83rem;color:var(--mut);line-height:1.9}
+.prix-txt strong{color:var(--dk);font-weight:700}
+
 /* FOOTER */
 footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .ftl{font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.12em}
@@ -331,7 +363,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   .hr{display:none}
   .hl{padding:4rem 0}
   .ag{grid-template-columns:1fr;gap:3rem}
-  .aimg{aspect-ratio:4/3}
+  .aimg{aspect-ratio:4/3;border-radius:14px}
   .svchdr{grid-template-columns:1fr}
   .svcg{grid-template-columns:repeat(2,1fr)}
   .procg{grid-template-columns:repeat(2,1fr)}
@@ -339,6 +371,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   .pstep{padding:0 1.2rem 2.8rem}
   .tg{grid-template-columns:1fr}
   .tc.wide{grid-column:span 1;grid-template-columns:1fr}
+  .pricg{grid-template-columns:1fr}
   .cg{grid-template-columns:1fr;gap:3rem}
   .bklay{grid-template-columns:1fr}
   .bkpanel{position:static}
@@ -346,8 +379,8 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   .blgsb{display:none}
   .bcard{grid-template-columns:1fr}
   .bcthumb{height:160px;border-left:none;border-top:1px solid var(--bdr)}
-  .postlay{grid-template-columns:1fr}
-  .posttoc{display:none}
+  .pricg{grid-template-columns:1fr}
+  .pricard{border-radius:16px}
 }
 @media(max-width:768px){
   .nlinks{display:none}
@@ -380,6 +413,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   <ul class="nlinks" id="nl">
     <li><a href="#" onclick="goHome(event,'#about')" data-sec="about">關於我</a></li>
     <li><a href="#" onclick="goHome(event,'#service')" data-sec="service">服務項目</a></li>
+    <li><a href="#" onclick="goHome(event,'#pricing')" data-sec="pricing">諮詢費用</a></li>
     <li><a href="#" onclick="goPage('booking',event)" data-pg="booking">預約諮詢</a></li>
     <li><a href="#" onclick="goPage('blog',event)" data-pg="blog">職涯部落格</a></li>
     <li><button class="btn nbtn" onclick="goPage('booking')">立即預約</button></li>
@@ -391,6 +425,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
 <div id="drw">
   <a href="#" onclick="goHome(event,'#about');togDrawer()">關於我</a>
   <a href="#" onclick="goHome(event,'#service');togDrawer()">服務項目</a>
+  <a href="#" onclick="goHome(event,'#pricing');togDrawer()">諮詢費用</a>
   <a href="#" onclick="goPage('booking');togDrawer()">預約諮詢</a>
   <a href="#" onclick="goPage('blog');togDrawer()">職涯部落格</a>
   <a href="#" onclick="goHome(event,'#contact-sec');togDrawer()">聯絡我</a>
@@ -466,44 +501,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
       <div class="avis fd">
         <div class="aframe"></div>
         <div class="aimg">
-          <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:auto">
-            <rect width="300" height="360" fill="rgba(253,232,211,.3)"/>
-            <rect x="15" y="266" width="270" height="7" rx="3" fill="rgba(192,82,26,.11)"/>
-            <rect x="50" y="190" width="80" height="78" rx="2" fill="white" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
-            <rect x="50" y="190" width="8" height="78" rx="1" fill="rgba(192,82,26,.17)"/>
-            <rect x="62" y="202" width="52" height="2" rx="1" fill="rgba(192,82,26,.2)"/>
-            <rect x="62" y="210" width="42" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
-            <rect x="62" y="218" width="47" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
-            <rect x="62" y="226" width="36" height="2" rx="1" fill="rgba(192,82,26,.13)"/>
-            <rect x="184" y="237" width="36" height="27" rx="4" fill="white" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
-            <path d="M220 247 Q229 247 229 255 Q229 263 220 263" fill="none" stroke="rgba(192,82,26,.17)" stroke-width="1.3"/>
-            <ellipse cx="202" cy="237" rx="18" ry="3.3" fill="rgba(192,82,26,.08)"/>
-            <path d="M195 231 Q197 225 195 219" fill="none" stroke="rgba(192,82,26,.23)" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M202 229 Q204 223 202 217" fill="none" stroke="rgba(192,82,26,.23)" stroke-width="1.3" stroke-linecap="round"/>
-            <rect x="245" y="242" width="17" height="23" rx="2" fill="rgba(192,82,26,.08)" stroke="rgba(192,82,26,.17)" stroke-width="1"/>
-            <ellipse cx="253" cy="242" rx="16" ry="12.5" fill="#7BAF6F" opacity=".53"/>
-            <ellipse cx="241" cy="236" rx="11" ry="9" fill="#6A9E5E" opacity=".58"/>
-            <ellipse cx="265" cy="234" rx="10" ry="8" fill="#7BAF6F" opacity=".53"/>
-            <rect x="112" y="254" width="66" height="10" rx="3" fill="rgba(192,82,26,.11)"/>
-            <rect x="117" y="263" width="4" height="36" rx="2" fill="rgba(192,82,26,.08)"/>
-            <rect x="169" y="263" width="4" height="36" rx="2" fill="rgba(192,82,26,.08)"/>
-            <path d="M130 215 Q127 250 128 263 Q146 273 160 273 Q174 273 172 263 Q173 250 170 215Z" fill="#DA6E34" opacity=".83"/>
-            <rect x="148" y="196" width="12" height="21" rx="4.5" fill="#F5CBA7"/>
-            <ellipse cx="154" cy="174" rx="34" ry="39" fill="#F5CBA7"/>
-            <path d="M121 164 Q124 127 154 124 Q184 127 187 164 Q181 144 154 141 Q127 144 121 164Z" fill="#1C120A"/>
-            <path d="M121 164 Q116 176 118 189" fill="none" stroke="#1C120A" stroke-width="9" stroke-linecap="round"/>
-            <path d="M187 164 Q192 176 190 189" fill="none" stroke="#1C120A" stroke-width="9" stroke-linecap="round"/>
-            <ellipse cx="140" cy="171" rx="5.8" ry="6.8" fill="white"/><ellipse cx="168" cy="171" rx="5.8" ry="6.8" fill="white"/>
-            <circle cx="141" cy="173" r="3.7" fill="#1C120A"/><circle cx="169" cy="173" r="3.7" fill="#1C120A"/>
-            <circle cx="142.5" cy="171.5" r="1.1" fill="white"/><circle cx="170.5" cy="171.5" r="1.1" fill="white"/>
-            <path d="M143 187 Q154 197 165 187" fill="none" stroke="#C0521A" stroke-width="1.8" stroke-linecap="round"/>
-            <ellipse cx="127" cy="181" rx="8.5" ry="5.5" fill="rgba(234,130,70,.2)"/>
-            <ellipse cx="181" cy="181" rx="8.5" ry="5.5" fill="rgba(234,130,70,.2)"/>
-            <path d="M130 220 Q106 232 88 240" fill="none" stroke="#F5CBA7" stroke-width="13" stroke-linecap="round"/>
-            <ellipse cx="84" cy="242" rx="10.5" ry="7" fill="#F5CBA7"/>
-            <path d="M170 220 Q194 232 205 238" fill="none" stroke="#F5CBA7" stroke-width="13" stroke-linecap="round"/>
-            <ellipse cx="209" cy="240" rx="10.5" ry="7" fill="#F5CBA7"/>
-          </svg>
+          <img src="https://seminia1491.github.io/CYStalktalk/photo.webp" alt="CY 小孔 · 職涯諮詢師" loading="lazy">
         </div>
         <div class="achip"><div class="achip-n">CY</div><div class="achip-t">職涯諮詢師</div></div>
       </div>
@@ -604,6 +602,77 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
         <div class="thi">把我混亂的思緒統整出來，給我一個思路讓我可以去評斷、去選擇。</div>
         <p class="tbody">諮詢期間非常能傾聽我的想法並完整梳理現階段的能力與工作猶豫點，讓我能更了解我需要的是哪一種職涯。</p>
         <div class="tau"><div class="tav">A</div><div><div class="tanm">職場迷茫解惑學員</div><div class="taro">職涯方向重建</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sp" style="background:var(--surf)">
+  <div class="wrap">
+    <div class="lbl fd">諮詢費用</div>
+    <h2 class="txl fd">選擇適合你的<em>諮詢方案</em></h2>
+    <div class="pricg">
+
+      <!-- Plan 1 -->
+      <div class="pricard fd">
+        <div class="pribadge">基本方案／續談</div>
+        <div class="priname">單次諮詢</div>
+        <div class="pritag">每節 50 分鐘（含 10 分鐘緩衝）</div>
+        <div class="priprice">1,600</div>
+        <div class="priunit">元 / 節</div>
+        <div class="priflow-ttl">適合</div>
+        <ul class="priflow">
+          <li>已有方向，想針對特定問題深談</li>
+          <li>持續追蹤進度的回訪學員</li>
+          <li>彈性安排，單次預約即可</li>
+        </ul>
+        <button class="pricta" onclick="document.getElementById('page-booking').style.display='block';goPage('booking')">預約此方案 →</button>
+      </div>
+
+      <!-- Plan 2 — featured -->
+      <div class="pricard featured fd">
+        <div class="pribadge">⭐ 初次諮詢方案</div>
+        <div class="priname">深度初次諮詢</div>
+        <div class="pritag">每 1.5 節 · 75 分鐘<br>初次建議選擇</div>
+        <div class="priprice">2,000</div>
+        <div class="priunit">元 / 次</div>
+        <div class="priflow-ttl">包含</div>
+        <ul class="priflow">
+          <li>完整職涯現況梳理</li>
+          <li>核心優勢與價值觀探索</li>
+          <li>初步方向建議與行動計畫</li>
+          <li>諮詢後書面摘要整理</li>
+        </ul>
+        <button class="pricta" onclick="goPage('booking')">預約此方案 →</button>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="pricard fd">
+        <div class="pribadge">多時數選購方案</div>
+        <div class="priname">職涯方向釐清套餐</div>
+        <div class="pritag">3.5 小時方案<br>適合需全面釐清職涯方向者</div>
+        <div class="priprice">5,000</div>
+        <div class="priunit">元 / 套餐</div>
+        <div class="priflow-ttl">包含</div>
+        <ul class="priflow">
+          <li>多次諮詢彈性安排</li>
+          <li>牌卡諮詢工具輔助探索</li>
+          <li>履歷健檢與優化建議</li>
+          <li>完整職涯路徑規劃報告</li>
+        </ul>
+        <button class="pricta" onclick="goPage('booking')">預約此方案 →</button>
+      </div>
+
+    </div>
+
+    <!-- Payment note -->
+    <div class="prix-note fd">
+      <div class="prix-ic">💳</div>
+      <div class="prix-txt">
+        <strong>付款方式：LINE PAY / 銀行轉帳</strong><br>
+        LINE Bank 銀行帳戶：824 連線商業銀行（總行 6880），帳號：111005988884<br>
+        預約確認後，請於 24 小時內完成付款，並將轉帳截圖傳至 LINE <strong>@902rnnqs</strong> 完成報名。
       </div>
     </div>
   </div>
