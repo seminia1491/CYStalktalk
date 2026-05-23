@@ -716,12 +716,14 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
     <div class="wrap">
       <div class="lbl" style="justify-content:center">預約諮詢</div>
       <h1 class="txl" style="color:#fff;text-align:center;margin-bottom:.8rem">選擇你的<em style="color:var(--or3)">諮詢時段</em></h1>
-      <p>選擇方便的日期與時間，提供 60 分鐘深度職涯諮詢，陪伴你找到屬於自己的方向。</p>
+      <p style="text-align:center;font-size:.88rem;color:rgba(255,255,255,.42);max-width:460px;margin:0 auto">選擇方便的日期與時間，填寫表單後，CY 會在 24 小時內透過 LINE / Email 與你確認。</p>
     </div>
   </div>
   <div class="bkbody">
     <div class="wrap">
       <div class="bklay">
+
+        <!-- LEFT: Calendar -->
         <div>
           <div class="calbox">
             <div class="calhdr">
@@ -738,33 +740,44 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
             <div class="timettl" id="timelbl"></div>
             <div class="timeslots" id="timeslots"></div>
           </div>
-        </div>
-        <div class="bkpanel">
-          <div class="bktoast" id="bktoast">
-            <div class="bktic">🎉</div>
-            <div class="bktt">預約成功！</div>
-            <div class="bkts" id="bktoastd"></div>
-          </div>
-          <div id="bkfw">
-            <div class="bksel"><div class="bksttl">已選擇時段</div><div class="bksval emp" id="seldisp">請先從左側選擇日期</div></div>
-            <div class="bkform">
-              <div><label class="fl">姓名 *</label><input type="text" class="fi" id="bN" placeholder="請輸入您的姓名"></div>
-              <div><label class="fl">Email *</label><input type="email" class="fi" id="bE" placeholder="您的電子郵件"></div>
-              <div><label class="fl">LINE ID / 電話</label><input type="text" class="fi" id="bL" placeholder="方便聯繫的方式"></div>
-              <div><label class="fl">想諮詢的主題</label>
-                <select class="fi" id="bTp" style="cursor:pointer">
-                  <option value="">請選擇主要困擾</option>
-                  <option>職涯方向釐清</option><option>尋找工作熱情</option>
-                  <option>牌卡諮詢</option><option>求職策略</option>
-                  <option>履歷優化／模擬面試</option><option>如何運用天賦</option>
-                  <option>心理調適</option><option>建立職場自信</option>
-                </select>
-              </div>
-              <div><label class="fl">補充說明</label><textarea class="fta" id="bNo" placeholder="簡短描述你目前的狀況..." style="min-height:85px"></textarea></div>
-              <button class="btn btp" style="width:100%;justify-content:center;padding:1rem" onclick="submitBk()">確認預約 →</button>
+
+          <!-- Info box -->
+          <div style="margin-top:1.8rem;padding:1.5rem;background:#fff;border:1px solid var(--bdr);border-radius:14px">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--or2);margin-bottom:1rem">流程說明</div>
+            <div style="display:flex;flex-direction:column;gap:.75rem">
+              <div style="display:flex;align-items:flex-start;gap:.8rem;font-size:.82rem;color:var(--mut)"><span style="width:1.4rem;height:1.4rem;border-radius:50%;background:var(--or1);color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">1</span><span>選擇希望的日期與時段</span></div>
+              <div style="display:flex;align-items:flex-start;gap:.8rem;font-size:.82rem;color:var(--mut)"><span style="width:1.4rem;height:1.4rem;border-radius:50%;background:var(--or1);color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">2</span><span>填寫右側報名表單（填完直接進試算表）</span></div>
+              <div style="display:flex;align-items:flex-start;gap:.8rem;font-size:.82rem;color:var(--mut)"><span style="width:1.4rem;height:1.4rem;border-radius:50%;background:var(--or1);color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">3</span><span>加入 LINE <strong style="color:var(--dk)">@902rnnqs</strong> 並傳訊確認</span></div>
+              <div style="display:flex;align-items:flex-start;gap:.8rem;font-size:.82rem;color:var(--mut)"><span style="width:1.4rem;height:1.4rem;border-radius:50%;background:var(--or1);color:#fff;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">4</span><span>完成匯款後即完成預約 🎉</span></div>
             </div>
           </div>
         </div>
+
+        <!-- RIGHT: Google Form embed -->
+        <div class="bkpanel" style="padding:0;overflow:hidden;border-radius:16px;border:1px solid var(--bdr)">
+          <div style="padding:1.4rem 1.8rem;background:var(--or1);border-radius:0">
+            <div style="font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.3rem">Step 2</div>
+            <div style="font-size:1rem;font-weight:700;color:#fff">填寫報名表單</div>
+            <div style="font-size:.78rem;color:rgba(255,255,255,.6);margin-top:.2rem">表單資料會直接同步到 CY 的預約系統</div>
+          </div>
+
+          <!-- 選好時段後顯示的提示 -->
+          <div id="selBanner" style="display:none;padding:.75rem 1.8rem;background:var(--or4);border-bottom:1px solid var(--bdr);font-size:.82rem;color:var(--dk)">
+            📅 已選擇：<strong id="selBannerText"></strong>　請在表單中備註此時段
+          </div>
+
+          <iframe
+            id="gformFrame"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSf0vb6GuyTFKCMPr1rdRQC3T6n4GJijg8kYNTKFvPwTnAw0Uw/viewform?embedded=true"
+            width="100%"
+            height="720"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            style="display:block;background:var(--bg)"
+          >載入中…</iframe>
+        </div>
+
       </div>
     </div>
   </div>
@@ -924,10 +937,7 @@ const MNS=['一','二','三','四','五','六','七','八','九','十','十一',
 
 function initCal(){
   const now=new Date();cy=now.getFullYear();cm=now.getMonth();sd=null;st=null;
-  renderCal();updSel();
-  document.getElementById('bkfw').style.display='block';
-  document.getElementById('bktoast').style.display='none';
-  document.getElementById('timebox').style.display='none';
+  renderCal();
 }
 function renderCal(){
   document.getElementById('calmth').textContent=cy+' 年 '+MN[cm];
@@ -956,7 +966,7 @@ function chMth(d){cm+=d;if(cm>11){cm=0;cy++}if(cm<0){cm=11;cy--}renderCal()}
 function selDay(d){
   sd=d;st=null;
   document.querySelectorAll('.cday').forEach(el=>{el.classList.remove('sel');if(parseInt(el.textContent)===d&&!el.classList.contains('inact')&&!el.classList.contains('past'))el.classList.add('sel')});
-  renderSlots(d);updSel();
+  renderSlots(d);updSel();updBanner();
 }
 function renderSlots(d){
   const bk=BOOKED[String(d)]||[];
@@ -965,25 +975,31 @@ function renderSlots(d){
   TIMES.forEach(t=>{
     const s=document.createElement('div');
     s.className='tslot'+(bk.includes(t)?' bk':'');s.textContent=t;
-    if(!bk.includes(t))s.addEventListener('click',()=>{st=t;document.querySelectorAll('.tslot').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');updSel()});
+    if(!bk.includes(t))s.addEventListener('click',()=>{st=t;document.querySelectorAll('.tslot').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');updSel();updBanner()});
     g.appendChild(s);
   });
   document.getElementById('timebox').style.display='block';
 }
 function updSel(){
   const el=document.getElementById('seldisp');
+  if(!el) return;
   if(sd&&st){el.textContent=cy+'年'+MNS[cm]+'月'+sd+'日 · '+st+'（60 分鐘）';el.className='bksval'}
   else if(sd){el.textContent='已選擇日期，請選擇時間';el.className='bksval'}
   else{el.textContent='請先從左側選擇日期';el.className='bksval emp'}
 }
-function submitBk(){
-  const n=document.getElementById('bN').value.trim(),e=document.getElementById('bE').value.trim();
-  if(!n||!e){alert('請填寫姓名和 Email ✨');return}
-  if(!sd||!st){alert('請先選擇諮詢日期與時間 📅');return}
-  document.getElementById('bkfw').style.display='none';
-  const t=document.getElementById('bktoast');
-  document.getElementById('bktoastd').textContent='諮詢時間：'+cy+'年'+MNS[cm]+'月'+sd+'日 '+st+'\n我會盡快以 Email 與您確認預約細節！';
-  t.style.display='block';
+function updBanner(){
+  const banner=document.getElementById('selBanner');
+  const txt=document.getElementById('selBannerText');
+  if(!banner||!txt) return;
+  if(sd&&st){
+    txt.textContent=cy+'年'+MNS[cm]+'月'+sd+'日 '+st;
+    banner.style.display='block';
+  } else if(sd){
+    txt.textContent=cy+'年'+MNS[cm]+'月'+sd+'日（請再選擇時間）';
+    banner.style.display='block';
+  } else {
+    banner.style.display='none';
+  }
 }
 
 /* ── BLOG ── */
