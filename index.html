@@ -132,8 +132,8 @@ button,input,textarea,select{font-family:inherit}
 .achip-t{font-size:.67rem;letter-spacing:.1em;opacity:.85;margin-top:.18rem}
 .atxt p{font-size:.91rem;color:var(--mut);line-height:2.1;margin-bottom:1.1rem}
 .atxt strong{color:var(--or1);font-weight:700}
-.pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.8rem}
-.pill{padding:.32rem .88rem;background:var(--or5);border:1px solid var(--bdr);font-size:.74rem;color:var(--mid);letter-spacing:.04em}
+.pills{display:grid;grid-template-columns:repeat(3,max-content);gap:.6rem .7rem;margin-top:1.8rem}
+.pill{padding:.32rem .88rem;background:var(--or5);border:1px solid var(--bdr);font-size:.74rem;color:var(--mid);letter-spacing:.04em;text-align:center}
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    HOME — SERVICE
@@ -392,6 +392,7 @@ footer{background:var(--dk);padding:3rem 5vw;display:flex;align-items:center;jus
   .nlinks{display:none}
   .hbg{display:flex}
   .sp{padding:5rem 0}
+  .pills{grid-template-columns:repeat(2,max-content)}
   .hstats{gap:1.8rem}
   .svcg{grid-template-columns:1fr 1fr}
   .timeslots{grid-template-columns:repeat(2,1fr)}
